@@ -1,0 +1,19 @@
+{
+  "name": "anti-social-media",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cole-busa/anti-social-media.git"
+  },
+  "author": "Cole Busa",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cole-busa/anti-social-media/issues"
+  },
+  "homepage": "https://github.com/cole-busa/anti-social-media#readme"
+}
