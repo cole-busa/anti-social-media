@@ -1,4 +1,4 @@
-package com.cbusa.asm;
+package com.cbusa.asm.domain;
 
 
 import jakarta.persistence.Entity;
