@@ -1,5 +1,7 @@
 package com.cbusa.asm.service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,5 +17,17 @@ public class UserService {
 
     public Iterable<User> listAll() {
 		return userRepository.findAll();
+	}
+
+	public Optional<User> findUserByName(String username) {
+		return userRepository.findByUsername(username);
+	}
+
+	public Optional<User> findUserById(Integer id) {
+		return userRepository.findById(id);
+	}
+
+	public void addUser(User user) {
+		userRepository.save(user);
 	}
 }

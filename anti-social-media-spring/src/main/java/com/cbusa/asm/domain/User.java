@@ -1,6 +1,5 @@
 package com.cbusa.asm.domain;
 
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -48,6 +47,4 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
-
-
 }
