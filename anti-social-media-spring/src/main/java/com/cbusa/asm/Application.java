@@ -11,7 +11,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @ComponentScan(basePackages = { "com.cbusa.asm.**"})
 @EntityScan( "com.cbusa.asm.**" )
 public class Application {
-		public static void main(String[] args) {
+	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
 	}
 }
