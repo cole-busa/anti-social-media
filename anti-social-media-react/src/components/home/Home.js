@@ -8,16 +8,12 @@ const Home = () => {
         e.preventDefault();
         
         const data = JSON.stringify({ username, password });
-        try {
-            api.post(
-                "/User/", 
-                data,
-                { headers: { 'Content-Type': 'application/json' },
-                    withCredentials: true }
-            ).then(response => {console.log(response)});
-        } catch(e) {
-            console.log(e);
-        }
+        api.post(
+            "/User/", 
+            data,
+            { headers: { 'Content-Type': 'application/json' },
+                withCredentials: true }
+        ).then(response => {console.log(response)});
       }
     
       const [username, setUsername] = useState()
