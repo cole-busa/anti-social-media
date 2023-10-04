@@ -1,9 +1,9 @@
 import React from 'react';
 
 import api from '../../api/axiosConfig';
-import { Button, TextField, FormControl, ThemeProvider, Container, createTheme, Box, Typography, CssBaseline, makeStyles, Grid, Link } from '@mui/material';
+import { Button, TextField, FormControl, ThemeProvider, Container, createTheme, Box, Typography, CssBaseline, makeStyles, Grid, Link, Tab } from '@mui/material';
 
-const Login = () => {
+const CreateAccount = () => {
     const handleSubmit = e => {
         e.preventDefault();
         const data = new FormData(e.currentTarget);
@@ -31,7 +31,7 @@ const Login = () => {
                         alignItems: 'center',
                     }}
                 >
-                    <Typography component="h1" variant="h5" sx={{color:'white', fontFamily: 'Roboto'}}>Log In</Typography>
+                    <Typography component="h1" variant="h5" sx={{color:'white', fontFamily: 'Roboto'}}>Create Account</Typography>
                     <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
                         <FormControl>
                             <TextField
@@ -60,13 +60,8 @@ const Login = () => {
                                 fullWidth
                                 sx={{ mt: 3, mb: 2 }}
                             >
-                                Log in
+                                Create Account
                             </Button>
-                            <Grid item>
-                                <Link href="create-account" variant="body2">
-                                {"Don't have an account? Sign Up"}
-                                </Link>
-                            </Grid>
                         </FormControl>
                     </Box>
                 </Box>
@@ -75,4 +70,4 @@ const Login = () => {
     );
 }
 
-export default Login;
+export default CreateAccount;

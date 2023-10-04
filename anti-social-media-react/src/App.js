@@ -1,11 +1,13 @@
-import './App.css';
-import { useState, useEffect } from 'react';
+import './styles/App.css';
 import Layout from './components/Layout';
 import { Routes, Route } from 'react-router-dom';
 import Login from './components/home/Login';
+import CreateAccount from './components/home/CreateAccount';
+import { useEffect, useState } from 'react';
 
 
 function App() {
+  const [bColor, changeBColor] = useState('#560088')
   /*const [users, setUsers] = useState();
   const setUser = async () => {
     try {
@@ -17,16 +19,18 @@ function App() {
     } catch(e) {
       console.log(e);
     }
-  }
+  }*/
+
   useEffect(() => {
-    setUser();
-  },[])*/
+    document.body.style.backgroundColor = bColor;
+  },[bColor])
 
   return (
     <div className="App">
       <Routes>
         <Route path="/" element={<Layout/>}>
           <Route path="/" element={<Login/>}></Route>
+          <Route path="/create-account" element={<CreateAccount/>}></Route>
         </Route>
       </Routes>
     </div>
