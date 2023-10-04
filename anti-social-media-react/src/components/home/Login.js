@@ -1,24 +1,56 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 import api from '../../api/axiosConfig';
+import { useNavigate } from 'react-router-dom';
 import { Button, TextField, FormControl, ThemeProvider, Container, createTheme, Box, Typography, CssBaseline, makeStyles, Grid, Link } from '@mui/material';
+import { Context } from '../../GlobalVariables';
 
 const Login = () => {
+    const navigate = useNavigate();
+
+    const [currentUser, setCurrentUser] = useContext(Context);
+    const [errorMessage, setErrorMessage] = useState('');
+    const [users, setUsers] = useState();
+
+    const setUser = async () => {
+        try {
+            const response = await api.get("/User/");
+            setUsers(response.data);
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
     const handleSubmit = e => {
         e.preventDefault();
         const data = new FormData(e.currentTarget);
         const username = data.get('username');
         const password = data.get('password');
-        api.post(
-            '/User/', 
-            JSON.stringify({ username, password }), 
-            {
-                headers: { 'Content-Type': 'application/json' },
-                withCredentials: false
+        
+        if (username.length > 0 && password.length > 0) {
+            let match = false;
+            for (let i = 0; i < users.length; i++) {
+                if (users[i].username === username && users[i].password === password) {
+                    match = true;
+                }
             }
-        ).then(response => {console.log(response)});
-      }
+            
+            if (match) {
+                setErrorMessage("");
+                setCurrentUser(username);
+                navigate("/home");
+            } else {
+                setErrorMessage("Username or Password is incorrect.");
+            }
+        }
+    }
+    
+    useEffect(() => {
+        setUser();
+    },[])
+
     const defaultTheme = createTheme();
+
     return (
         <ThemeProvider theme={defaultTheme}>
             <Container component="main" maxWidth="xs">
@@ -42,7 +74,8 @@ const Login = () => {
                                 autoFocus
                                 fullWidth
                                 required
-                                
+                                error={errorMessage !== ''}
+                                helperText={errorMessage}
                             />
                             <TextField
                                 margin='normal'
@@ -53,6 +86,8 @@ const Login = () => {
                                 autoComplete="current-password"
                                 required
                                 fullWidth
+                                error={errorMessage !== ''}
+                                helperText={errorMessage}
                             />
                             <Button 
                                 type="submit"
