@@ -35,28 +35,33 @@ const CreateAccount = () => {
                 }
             }
             
-            if (!usernameMatch && passwordsMatch) {
-                setUsernameErrorMessage("");
-                setPasswordErrorMessage("");
-                const password = password1;
-                api.post(
-                    '/User/', 
-                    JSON.stringify({ username, password }), 
-                    {
-                        headers: { 'Content-Type': 'application/json' },
-                        withCredentials: false
-                    }
-                ).then(response => {console.log(response)});
-                navigate("/");
-            } else if (usernameMatch && passwordsMatch) {
-                setUsernameErrorMessage("Username already exists.");
-                setPasswordErrorMessage("");
-            } else if (usernameMatch && !passwordsMatch) {
-                setUsernameErrorMessage("Username already exists.");
-                setPasswordErrorMessage("Passwords do not match.");
-            } else {
-                setUsernameErrorMessage("");
-                setPasswordErrorMessage("Passwords do not match.");
+            switch (true) {
+                case (!usernameMatch && passwordsMatch):
+                    setUsernameErrorMessage("");
+                    setPasswordErrorMessage("");
+                    const password = password1;
+                    api.post(
+                        '/User/', 
+                        JSON.stringify({ username, password }), 
+                        {
+                            headers: { 'Content-Type': 'application/json' },
+                            withCredentials: false
+                        }
+                    ).then(response => {console.log(response)});
+                    navigate("/");
+                    break;
+                case (usernameMatch && passwordsMatch):
+                    setUsernameErrorMessage("Username already exists.");
+                    setPasswordErrorMessage("");
+                    break;
+                case (usernameMatch && !passwordsMatch):
+                    setUsernameErrorMessage("Username already exists.");
+                    setPasswordErrorMessage("Passwords do not match.");
+                    break;
+                case (!usernameMatch && !passwordsMatch):
+                    setUsernameErrorMessage("");
+                    setPasswordErrorMessage("Passwords do not match.");
+                    break;
             }
         }
     }
