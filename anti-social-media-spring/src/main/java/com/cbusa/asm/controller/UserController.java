@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,6 +35,16 @@ public class UserController {
 	@GetMapping("/Id/{id}")
 	public Optional<User> getUserById(@PathVariable Integer id) {
 		return userService.findUserById(id);
+	}
+
+	@PutMapping("/Id/{id}/{newFriend}")
+	public void addFriend(@PathVariable Integer id, @PathVariable String newFriend) {
+		Optional<User> optionalUser = userService.findUserById(id);
+		if (optionalUser.isPresent()) {
+			User user = optionalUser.get();
+			user.addFriend(newFriend);
+			userService.updateUser(user);
+		}
 	}
 
 	@PostMapping("/")

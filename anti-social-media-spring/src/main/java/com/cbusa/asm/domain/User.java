@@ -21,11 +21,13 @@ public class User {
     public User() {
         this.username = "";
         this.password = "";
+        this.friends = new ArrayList<String>();
     }
 
     public User(String username, String password) {
         this.username = username;
         this.password = password;
+        this.friends = new ArrayList<String>();
     }
 
 
@@ -59,5 +61,9 @@ public class User {
 
     public void setFriends(ArrayList<String> friends) {
         this.friends = friends;
+    }
+
+    public void addFriend(String friend) {
+        friends.add(friend);
     }
 }
