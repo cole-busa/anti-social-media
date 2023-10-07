@@ -6,6 +6,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -16,18 +17,20 @@ public class User {
     private Integer id;
     private String username;
     private String password;
-    private ArrayList<String> friends;
+
+    @ManyToOne
+    private ArrayList<Friend> friends;
 
     public User() {
         this.username = "";
         this.password = "";
-        this.friends = new ArrayList<String>();
+        this.friends = new ArrayList<Friend>();
     }
 
     public User(String username, String password) {
         this.username = username;
         this.password = password;
-        this.friends = new ArrayList<String>();
+        this.friends = new ArrayList<Friend>();
     }
 
 
@@ -55,15 +58,15 @@ public class User {
         this.password = password;
     }
 
-    public ArrayList<String> getFriends() {
+    public ArrayList<Friend> getFriends() {
         return this.friends;
     }
 
-    public void setFriends(ArrayList<String> friends) {
+    public void setFriends(ArrayList<Friend> friends) {
         this.friends = friends;
     }
 
-    public void addFriend(String friend) {
+    public void addFriend(Friend friend) {
         friends.add(friend);
     }
 }

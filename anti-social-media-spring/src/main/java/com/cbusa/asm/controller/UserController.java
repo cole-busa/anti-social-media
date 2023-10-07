@@ -28,13 +28,13 @@ public class UserController {
 	}
 
 	@GetMapping("/Name/{username}")
-	public Optional<User> getUserByName(@PathVariable String username) {
-		return userService.findUserByName(username);
+	public User getUserByName(@PathVariable String username) {
+		return userService.findUserByName(username).get();
 	}
 
 	@GetMapping("/Id/{id}")
-	public Optional<User> getUserById(@PathVariable Integer id) {
-		return userService.findUserById(id);
+	public User getUserById(@PathVariable Integer id) {
+		return userService.findUserById(id).get();
 	}
 
 	@PutMapping("/Id/{id}/{newFriend}")
