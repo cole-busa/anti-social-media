@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cbusa.asm.domain.Friend;
-import com.cbusa.asm.domain.User;
 import com.cbusa.asm.repository.FriendRepository;
 
 import jakarta.transaction.Transactional;
@@ -17,8 +16,8 @@ public class FriendService {
     @Autowired
     private FriendRepository friendRepository;
 
-    public List<Friend> findFriendByUser(User user) {
-        return friendRepository.findByUser(user);
+    public List<Friend> findFriendByUser(String username) {
+        return friendRepository.findByUsername(username);
     }
 
     public void addFriend(Friend friend) {

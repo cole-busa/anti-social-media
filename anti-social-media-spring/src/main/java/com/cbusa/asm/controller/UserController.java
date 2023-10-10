@@ -42,13 +42,13 @@ public class UserController {
 		return userService.findUserById(id).get();
 	}
 
-	@PutMapping("/Id/{id}/{newFriend}")
-	public void addFriend(@PathVariable Integer id, @PathVariable String newFriend) {
-		Optional<User> optionalUser = userService.findUserById(id);
+	@PutMapping("/Friends/{username}/{newFriend}")
+	public void addFriend(@PathVariable String username, @PathVariable String newFriend) {
+		Optional<User> optionalUser = userService.findUserByName(username);
 		if (optionalUser.isPresent()) {
 			User user = optionalUser.get();
 			Friend friend = new Friend(user, newFriend);
-			if (!friendService.findFriendByUser(user).contains(friend)) {
+			if (!friendService.findFriendByUser(user.getUsername()).contains(friend)) {
 				user.addFriend(friend);
 				userService.updateUser(user);
 			}

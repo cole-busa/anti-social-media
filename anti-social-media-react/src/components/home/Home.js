@@ -11,19 +11,43 @@ const Home = () => {
     const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
     const [users, setUsers] = useState();
+    const [friends, setFriends] = useState();
+    const [loadingUsers, setLoadingUsers] = useState(true);
+    const [loadingFriends, setLoadingFriends] = useState(true);
+    const [noFriends, setNoFriends] = useState(false);
 
-    const setUser = async () => {
-        try {
-            const response = await api.get("/User/");
-            setUsers(response.data);
-        } catch (e) {
-            console.log(e);
-        }
+    const handleSendFriendRequest = (friendname) => {
+        api.post("/Friend/" + currentUser + "/" + friendname).then(response => { console.log(response) });
+        api.put("/User/Friends/" + currentUser + "/" + friendname);
     }
 
     useEffect(() => {
-        setUser();
-    }, [])
+        const setCurrentUsers = async () => {
+            try {
+                const response = await api.get("/User/");
+                setUsers(response.data.filter((user) => user.username !== currentUser));
+                setLoadingUsers(false);
+            } catch (e) {
+                console.log(e);
+            }
+        };
+
+        const setCurrentFriends = async () => {
+            try {
+                const response = await api.get("/Friend/" + currentUser);
+                setFriends(response.data);
+                setLoadingFriends(false);
+                if (response.data === null) {
+                    setNoFriends(true);
+                }
+            } catch (e) {
+                console.log(e);
+            }
+        };
+
+        setCurrentUsers();
+        setCurrentFriends();
+    }, []);
 
     return (
         <ThemeProvider theme={defaultTheme}>
@@ -43,18 +67,59 @@ const Home = () => {
                         '& .MuiDrawer-paper': {
                             width: 240,
                             boxSizing: 'border-box',
+                            marginTop: 8,
                         },
                     }}
                     variant="permanent"
                     anchor="left"
                 >
-                    {users.username}
+                    Current Users:
+                    {loadingUsers ? (
+                        <Typography>Loading users...</Typography>
+                    ) : (
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                            }}
+                        >
+                            {users.map((user) => (
+                                <Box key={user.id} sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                                    <Typography>{user.username}</Typography>
+                                    <Button variant="contained" onClick={() => handleSendFriendRequest(user.username)}>
+                                        Add Friend
+                                    </Button>
+                                </Box>
+                            ))}
+                        </Box>
+                    )}
+
+                    Current Friends:
+                    {loadingFriends ? (
+                        <Typography>Loading friends...</Typography>
+                    ) : !noFriends ? (
+                        <Typography>No friends yet...</Typography>
+                    ) : (
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                            }}
+                        >
+                            {friends.map((friend) => (
+                                <Box key={friend.id} sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                                    <Typography>{friend.friendname}</Typography>
+                                </Box>
+                            ))}
+                        </Box>
+                    )}
                 </Drawer>
                 <Box
                     sx={{
                         bgcolor: 'background.paper',
                         pt: 8,
                         pb: 6,
+                        marginTop: 8,
                     }}
                 >
                     <Container maxWidth="sm">

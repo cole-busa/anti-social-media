@@ -19,7 +19,7 @@ public class User {
     private String username;
     private String password;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "username")
     private List<Friend> friends;
 
     public User() {
