@@ -5,10 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import jakarta.persistence.Transient;
 
 @Entity
 @Table(name = "Friend")
@@ -18,30 +15,30 @@ public class Friend {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Transient
-    private User user;
-
     @Column(name = "Username")
     private String username;
 
     @Column(name = "Friendname")
     private String friendName;
 
+    @Column(name = "User_Id")
+    private Integer userId;
+
     public Friend() {
     }
 
     public Friend(User user, String friendName) {
-        this.user = user;
         this.username = user.getUsername();
+        this.userId = user.getId();
         this.friendName = friendName;
     }
 
-    public User getUser() {
-        return this.user;
+    public String getUsername() {
+        return this.username;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUser(String username) {
+        this.username = username;
     }
 
     public String getFriendName() {

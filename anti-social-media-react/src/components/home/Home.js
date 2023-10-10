@@ -19,32 +19,38 @@ const Home = () => {
     const handleSendFriendRequest = (friendname) => {
         api.post("/Friend/" + currentUser + "/" + friendname).then(response => { console.log(response) });
         api.put("/User/Friends/" + currentUser + "/" + friendname);
+        setCurrentUsers();
+        setCurrentFriends();
     }
 
-    useEffect(() => {
-        const setCurrentUsers = async () => {
-            try {
-                const response = await api.get("/User/");
-                setUsers(response.data.filter((user) => user.username !== currentUser));
-                setLoadingUsers(false);
-            } catch (e) {
-                console.log(e);
-            }
-        };
 
-        const setCurrentFriends = async () => {
-            try {
-                const response = await api.get("/Friend/" + currentUser);
+    const setCurrentUsers = async () => {
+        try {
+            const response = await api.get("/User/");
+            setUsers(response.data.filter((user) => user.username !== currentUser));
+            setLoadingUsers(false);
+        } catch (e) {
+            console.log(e);
+        }
+    };
+
+    const setCurrentFriends = async () => {
+        try {
+            const response = await api.get("/Friend/" + currentUser);
+            if (response === null) {
+                setNoFriends(true);
+            } else {
                 setFriends(response.data);
-                setLoadingFriends(false);
-                if (response.data === null) {
-                    setNoFriends(true);
-                }
-            } catch (e) {
-                console.log(e);
+                console.log("hello");
+                console.log(friends);
             }
-        };
+            setLoadingFriends(false);
+        } catch (e) {
+            console.log(e);
+        }
+    };
 
+    useEffect(() => {
         setCurrentUsers();
         setCurrentFriends();
     }, []);
@@ -107,8 +113,8 @@ const Home = () => {
                             }}
                         >
                             {friends.map((friend) => (
-                                <Box key={friend.id} sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                                    <Typography>{friend.friendname}</Typography>
+                                <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                                    <Typography>{friend.friendName}</Typography>
                                 </Box>
                             ))}
                         </Box>
