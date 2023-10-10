@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cbusa.asm.domain.Friend;
 import com.cbusa.asm.domain.User;
+import com.cbusa.asm.service.FriendService;
 import com.cbusa.asm.service.UserService;
 
 @RestController
@@ -21,6 +23,9 @@ import com.cbusa.asm.service.UserService;
 public class UserController {
 	@Autowired
 	private UserService userService;
+
+	@Autowired
+	private FriendService friendService;
 
 	@GetMapping("/")
 	public Iterable<User> getAllUsers() {
@@ -42,8 +47,11 @@ public class UserController {
 		Optional<User> optionalUser = userService.findUserById(id);
 		if (optionalUser.isPresent()) {
 			User user = optionalUser.get();
-			user.addFriend(newFriend);
-			userService.updateUser(user);
+			Friend friend = new Friend(user, newFriend);
+			if (!friendService.findFriendByUser(user).contains(friend)) {
+				user.addFriend(friend);
+				userService.updateUser(user);
+			}
 		}
 	}
 
