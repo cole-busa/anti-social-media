@@ -1,5 +1,6 @@
 package com.cbusa.asm.domain;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,6 +21,7 @@ public class Friend {
     @JoinColumn(name="Username")
     private User user;
 
+    @Column(name = "Friendname")
     private String friendName;
 
     public Friend(User user, String friendName) {

@@ -1,17 +1,34 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
+import api from '../../api/axiosConfig';
 import { Context } from '../../GlobalVariables';
-import { AppBar, Box, Button, Card, CardActions, CardContent, CardMedia, Container, CssBaseline, Grid, Stack, ThemeProvider, Toolbar, Typography, createTheme } from '@mui/material';
+import { AppBar, Box, Button, Card, CardActions, CardContent, CardMedia, Container, CssBaseline, Drawer, Grid, Stack, ThemeProvider, Toolbar, Typography, createTheme } from '@mui/material';
 
 const Home = () => {
     const [currentUser, setCurrentUser] = useContext(Context);
     const defaultTheme = createTheme();
     const anti_social_score = 1;
     const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+
+    const [users, setUsers] = useState();
+
+    const setUser = async () => {
+        try {
+            const response = await api.get("/User/");
+            setUsers(response.data);
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+    useEffect(() => {
+        setUser();
+    }, [])
+
     return (
         <ThemeProvider theme={defaultTheme}>
             <CssBaseline />
-            <AppBar position="relative">
+            <AppBar sx={{ position: "fixed", zIndex: 1400 }}>
                 <Toolbar>
                     <Typography variant="h6" color="inherit" noWrap>
                         {currentUser}'s Page!
@@ -19,6 +36,20 @@ const Home = () => {
                 </Toolbar>
             </AppBar>
             <main>
+                <Drawer
+                    sx={{
+                        width: 240,
+                        flexShrink: 0,
+                        '& .MuiDrawer-paper': {
+                            width: 240,
+                            boxSizing: 'border-box',
+                        },
+                    }}
+                    variant="permanent"
+                    anchor="left"
+                >
+                    {users.username}
+                </Drawer>
                 <Box
                     sx={{
                         bgcolor: 'background.paper',

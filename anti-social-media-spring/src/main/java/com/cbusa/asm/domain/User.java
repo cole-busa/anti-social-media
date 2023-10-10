@@ -1,6 +1,7 @@
 package com.cbusa.asm.domain;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -18,8 +19,8 @@ public class User {
     private String username;
     private String password;
 
-    @OneToMany
-    private ArrayList<Friend> friends;
+    @OneToMany(mappedBy = "user")
+    private List<Friend> friends;
 
     public User() {
         this.username = "";
@@ -58,11 +59,11 @@ public class User {
         this.password = password;
     }
 
-    public ArrayList<Friend> getFriends() {
+    public List<Friend> getFriends() {
         return this.friends;
     }
 
-    public void setFriends(ArrayList<Friend> friends) {
+    public void setFriends(List<Friend> friends) {
         this.friends = friends;
     }
 
