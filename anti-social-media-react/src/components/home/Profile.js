@@ -1,12 +1,13 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import api from '../../api/axiosConfig';
 import { useNavigate } from 'react-router-dom';
 import { AppBar, Box, Button, Card, CardActions, CardContent, CardMedia, Container, CssBaseline, Drawer, Grid, Stack, ThemeProvider, Toolbar, Typography, createTheme } from '@mui/material';
 
-const Home = () => {
+const Profile = () => {
     const navigate = useNavigate();
     const currentUser = localStorage.getItem('currentUser');
+    const currentProfile = localStorage.getItem('currentProfile');
     const defaultTheme = createTheme();
     const anti_social_score = 1;
     const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
@@ -17,7 +18,12 @@ const Home = () => {
     const [loadingFriends, setLoadingFriends] = useState(true);
     const [noFriends, setNoFriends] = useState(false);
     const [allUsersAdded, setAllUsersAdded] = useState(false);
-    
+
+    const handleReturnHome = () => {
+        localStorage.setItem('currentProfile', currentUser);
+        navigate("/home");
+    }
+
     const handleSendFriendRequest = (friendName) => {
         api.post("/Friend/" + currentUser + "/" + friendName);
         api.put("/User/Friends/" + currentUser + "/" + friendName);
@@ -66,7 +72,7 @@ const Home = () => {
             setUsers(currentUsers);
             setLoadingUsers(false);
             setLoadingFriends(false);
-            
+
         } catch (e) {
             console.log(e);
         }
@@ -82,7 +88,7 @@ const Home = () => {
             <AppBar sx={{ position: "fixed", zIndex: 1400 }}>
                 <Toolbar>
                     <Typography variant="h6" color="inherit" fontWeight='bold' noWrap>
-                        {currentUser}'s Page
+                        {currentProfile}'s Page
                     </Typography>
                 </Toolbar>
             </AppBar>
@@ -91,7 +97,6 @@ const Home = () => {
                     sx={{
                         width: 240,
                         flexShrink: 0,
-                        bgcolor: 'background.paper',
                         '& .MuiDrawer-paper': {
                             width: 240,
                             boxSizing: 'border-box',
@@ -147,6 +152,9 @@ const Home = () => {
                                     </Button>
                                 </Box>
                             ))}
+                            <Button variant="contained" onClick={() => handleReturnHome()}>
+                                Return Home
+                            </Button>
                         </Box>
                     )}
                 </Drawer>
@@ -164,7 +172,7 @@ const Home = () => {
                             align="center"
                             color="text.primary"
                         >
-                            {currentUser}
+                            {currentProfile}
                         </Typography>
                         <Typography variant="h5" align="center" color="purple" fontWeight='bold' paragraph>
                             Anti-Social Score: {anti_social_score}
@@ -216,4 +224,4 @@ const Home = () => {
     );
 }
 
-export default Home;
+export default Profile;
