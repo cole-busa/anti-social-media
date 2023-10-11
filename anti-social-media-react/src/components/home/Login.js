@@ -3,12 +3,10 @@ import React, { useContext, useEffect, useState } from 'react';
 import api from '../../api/axiosConfig';
 import { useNavigate } from 'react-router-dom';
 import { Button, TextField, FormControl, ThemeProvider, Container, createTheme, Box, Typography, CssBaseline, makeStyles, Grid, Link } from '@mui/material';
-import { Context } from '../../GlobalVariables';
 
 const Login = () => {
     const navigate = useNavigate();
 
-    const [currentUser, setCurrentUser] = useContext(Context);
     const [errorMessage, setErrorMessage] = useState('');
     const [users, setUsers] = useState();
 
@@ -37,7 +35,8 @@ const Login = () => {
             
             if (match) {
                 setErrorMessage("");
-                setCurrentUser(username);
+                localStorage.setItem('currentUser', username);
+                //setCurrentUser(username);
                 navigate("/home");
             } else {
                 setErrorMessage("Username or Password is incorrect.");

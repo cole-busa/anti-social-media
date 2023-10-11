@@ -1,11 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
 
 import api from '../../api/axiosConfig';
-import { Context } from '../../GlobalVariables';
 import { AppBar, Box, Button, Card, CardActions, CardContent, CardMedia, Container, CssBaseline, Drawer, Grid, Stack, ThemeProvider, Toolbar, Typography, createTheme } from '@mui/material';
 
 const Home = () => {
-    const [currentUser, setCurrentUser] = useContext(Context);
+    const currentUser = localStorage.getItem('currentUser');
     const defaultTheme = createTheme();
     const anti_social_score = 1;
     const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
@@ -16,11 +15,13 @@ const Home = () => {
     const [loadingFriends, setLoadingFriends] = useState(true);
     const [noFriends, setNoFriends] = useState(false);
     const [allUsersAdded, setAllUsersAdded] = useState(false);
-
+    
     const handleSendFriendRequest = (friendName) => {
         api.post("/Friend/" + currentUser + "/" + friendName);
         api.put("/User/Friends/" + currentUser + "/" + friendName);
-        setCurrentUsersAndFriends();
+        setCurrentUsersAndFriends().then(() => {
+            window.location.reload();
+        });
     }
 
     const handleViewProfile = (friendName) => {
@@ -31,7 +32,6 @@ const Home = () => {
         try {
             const friendResponse = await api.get("/Friend/" + currentUser);
             const userResponse = await api.get("/User/");
-            console.log(userResponse.data);
             const userFilter = [];
             userFilter.push(currentUser);
             if (friendResponse === null) {
@@ -60,10 +60,10 @@ const Home = () => {
             if (!currentUsers.length) {
                 setAllUsersAdded(true);
             }
-            console.log(currentUsers);
             setUsers(currentUsers);
             setLoadingUsers(false);
             setLoadingFriends(false);
+            
         } catch (e) {
             console.log(e);
         }
@@ -133,7 +133,7 @@ const Home = () => {
                             }}
                         >
                             {friends.map((friend) => (
-                                <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                                <Box key={[friend.username, friend.friendName]} sx={{ display: 'flex', justifyContent: 'space-between' }}>
                                     <Typography>{friend.friendName}</Typography>
                                     <Button variant="contained" onClick={() => handleViewProfile(friend.friendName)}>
                                         View Profile
