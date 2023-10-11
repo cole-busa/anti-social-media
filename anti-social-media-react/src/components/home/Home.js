@@ -15,35 +15,54 @@ const Home = () => {
     const [loadingUsers, setLoadingUsers] = useState(true);
     const [loadingFriends, setLoadingFriends] = useState(true);
     const [noFriends, setNoFriends] = useState(false);
+    const [allUsersAdded, setAllUsersAdded] = useState(false);
 
-    const handleSendFriendRequest = (friendname) => {
-        api.post("/Friend/" + currentUser + "/" + friendname).then(response => { console.log(response) });
-        api.put("/User/Friends/" + currentUser + "/" + friendname);
-        setCurrentUsers();
-        setCurrentFriends();
+    const handleSendFriendRequest = (friendName) => {
+        api.post("/Friend/" + currentUser + "/" + friendName);
+        api.put("/User/Friends/" + currentUser + "/" + friendName);
+        setCurrentUsersAndFriends();
     }
 
+    const handleViewProfile = (friendName) => {
 
-    const setCurrentUsers = async () => {
-        try {
-            const response = await api.get("/User/");
-            setUsers(response.data.filter((user) => user.username !== currentUser));
-            setLoadingUsers(false);
-        } catch (e) {
-            console.log(e);
-        }
-    };
+    }
 
-    const setCurrentFriends = async () => {
+    const setCurrentUsersAndFriends = async () => {
         try {
-            const response = await api.get("/Friend/" + currentUser);
-            if (response === null) {
+            const friendResponse = await api.get("/Friend/" + currentUser);
+            const userResponse = await api.get("/User/");
+            console.log(userResponse.data);
+            const userFilter = [];
+            userFilter.push(currentUser);
+            if (friendResponse === null) {
                 setNoFriends(true);
             } else {
-                setFriends(response.data);
-                console.log("hello");
-                console.log(friends);
+                for (const friend of friendResponse.data) {
+                    userFilter.push(friend.friendName);
+                }
+                setNoFriends(false);
+                setFriends(friendResponse.data);
             }
+            const currentUsers = [];
+            let match = false;
+            for (const user of userResponse.data) {
+                for (const name of userFilter) {
+                    if (user.username === name) {
+                        match = true;
+                        break;
+                    }
+                }
+                if (!match) {
+                    currentUsers.push(user);
+                }
+                match = false;
+            }
+            if (!currentUsers.length) {
+                setAllUsersAdded(true);
+            }
+            console.log(currentUsers);
+            setUsers(currentUsers);
+            setLoadingUsers(false);
             setLoadingFriends(false);
         } catch (e) {
             console.log(e);
@@ -51,8 +70,7 @@ const Home = () => {
     };
 
     useEffect(() => {
-        setCurrentUsers();
-        setCurrentFriends();
+        setCurrentUsersAndFriends();
     }, []);
 
     return (
@@ -82,6 +100,8 @@ const Home = () => {
                     Current Users:
                     {loadingUsers ? (
                         <Typography>Loading users...</Typography>
+                    ) : allUsersAdded ? (
+                        <Typography>All users added!</Typography>
                     ) : (
                         <Box
                             sx={{
@@ -103,7 +123,7 @@ const Home = () => {
                     Current Friends:
                     {loadingFriends ? (
                         <Typography>Loading friends...</Typography>
-                    ) : !noFriends ? (
+                    ) : noFriends ? (
                         <Typography>No friends yet...</Typography>
                     ) : (
                         <Box
@@ -115,6 +135,9 @@ const Home = () => {
                             {friends.map((friend) => (
                                 <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                                     <Typography>{friend.friendName}</Typography>
+                                    <Button variant="contained" onClick={() => handleViewProfile(friend.friendName)}>
+                                        View Profile
+                                    </Button>
                                 </Box>
                             ))}
                         </Box>

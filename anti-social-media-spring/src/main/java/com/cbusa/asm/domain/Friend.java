@@ -25,6 +25,8 @@ public class Friend {
     private Integer userId;
 
     public Friend() {
+        this.username = "";
+        this.friendName = "";
     }
 
     public Friend(User user, String friendName) {
