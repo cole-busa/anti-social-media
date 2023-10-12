@@ -4,4 +4,4 @@ How do we break into the over-saturated market of social media platforms? :think
 
 This project uses React.js as the front-end with Axios for REST requests and Material UI for premade components. The back-end consists of Spring Boot alongside a MySQL database to store user info. :grinning:
 
-TODO: Add movie lists, TV show lists, and video game lists for each user to select from and display. Calculate a total anti-social score that shows at the top of their profile. Add friends lists and the ability to view other people's profiles.
+TODO: Add movie lists, TV show lists, and video game lists for each user to search from and display. Calculate a total anti-social score that shows at the top of their profile. 
