@@ -1,0 +1,101 @@
+tv_show,season_years,first_season_yr,last_season_yr,running_time_min,genre,subgenre1,subgenre2,imdb_rating,watched_yn
+Breaking Bad,2008–2013,2008,2013,49,Crime, Drama, Thriller,9.4,Y
+Game of Thrones,2011–2019,2011,2019,57,Action, Adventure, Drama,9.3,N
+The Mandalorian,2019–,2019,,40,Action, Adventure, Sci-Fi,8.8,Y
+Friends,1994–2004,1994,2004,22,Comedy, Romance,N/A,8.9,Y
+The Sopranos,1999–2007,1999,2007,55,Crime, Drama,N/A,9.2,Y
+The Wonder Years,1988–1993,1988,1993,22,Comedy, Drama, Family,8.3,N
+Seinfeld,1989–1998,1989,1998,22,Comedy,N/A,N/A,8.8,N
+House of Cards,2013–2018,2013,2018,51,Drama,N/A,N/A,8.7,Y
+Lost,2004–2010,2004,2010,44,Adventure, Drama, Fantasy,8.3,Y
+Westworld,2016–,2016,,62,Drama, Mystery, Sci-Fi,8.6,Y
+Stranger Things,2016–,2016,,51,Drama, Fantasy, Horror,8.7,Y
+The X Files,1993–2018,1993,2018,45,Crime, Drama, Mystery,8.6,N
+Chernobyl,2019,2019,2019,72,Drama, History, Thriller,9.4,N
+Better Call Saul,2015–,2015,,46,Crime, Drama,N/A,8.7,N
+Narcos,2015–2017,2015,2017,49,Biography, Crime, Drama,8.8,Y
+Family Guy,1999–,1999,,22,Animation, Comedy,N/A,8.1,Y
+Parks and Recreation,2009–2020,2009,2020,22,Comedy,N/A,N/A,8.6,N
+The Simpsons,1989–,1989,,22,Animation, Comedy,N/A,8.6,Y
+The Wire,2002–2008,2002,2008,59,Crime, Drama, Thriller,9.3,Y
+Rome,2005–2007,2005,2007,52,Action, Drama, History,8.7,N
+Rick and Morty,2013–,2013,,23,Animation, Adventure, Comedy,9.2,N
+Homeland,2011–2020,2011,2020,55,Crime, Drama, Mystery,8.3,N
+Band of Brothers,2001,2001,2001,70,Action, Drama, History,9.4,Y
+Vikings,2013–2020,2013,2020,44,Action, Adventure, Drama,8.5,Y
+The Boys,2019–,2019,,60,Action, Comedy, Crime,8.7,N
+The Good Place,2016–2020,2016,2020,22,Comedy, Drama, Fantasy,8.2,N
+24,2001–2010,2001,2010,44,Action, Crime, Drama,8.3,Y
+Two and a Half Men,2003–2015,2003,2015,22,Comedy, Romance,N/A,7,N
+X-Men,1992–1997,1992,1997,23,Animation, Action, Family,8.4,Y
+Legion,2017–2019,2017,2019,60,Action, Drama, Sci-Fi,8.2,Y
+American Crime Story,2016–,2016,,42,Biography, Crime, Drama,8.4,N
+Dexter,2006–2021,2006,2021,53,Crime, Drama, Mystery,8.6,N
+The Walking Dead,2010–2022,2010,2022,44,Drama, Horror, Thriller,8.2,Y
+Ted Lasso,2020–,2020,,30,Comedy, Drama, Sport,8.7,N
+The Handmaid's Tale,2017–,2017,,60,Drama, Sci-Fi, Thriller,8.4,N
+True Detective,2014–2019,2014,2019,55,Crime, Drama, Mystery,8.9,N
+Brooklyn Nine-Nine,2013–2022,2013,2022,22,Comedy, Crime,N/A,8.4,N
+Bob's Burgers,2011–,2011,,22,Animation, Comedy,N/A,8.1,N
+The Umbrella Academy,2019–,2019,,60,Action, Adventure, Comedy,8,N
+Mr. Robot,2015–2019,2015,2019,49,Crime, Drama, Thriller,8.5,Y
+Boardwalk Empire,2010–2014,2010,2014,55,Crime, Drama, History,8.5,N
+Star Trek: The Next Generation,1987–1994,1987,1994,44,Action, Adventure, Mystery,8.6,Y
+"Scooby Doo, Where Are You!",1969–1970,1969,1970,22,Animation, Adventure, Comedy,7.9,N
+Daredevil,2015–2018,2015,2018,54,Action, Crime, Drama,8.6,Y
+Prison Break,2005–2017,2005,2017,44,Action, Crime, Drama,8.3,Y
+House M.D.,2004–2012,2004,2012,44,Drama, Mystery,N/A,8.7,Y
+ER,1994–2009,1994,2009,44,Drama, Romance,N/A,7.7,N
+The Big Bang Theory,2007–2019,2007,2019,22,Comedy, Romance,N/A,8.1,Y
+South Park,1997–,1997,,22,Animation, Comedy,N/A,8.7,Y
+Fargo,2014–,2014,,53,Crime, Drama, Thriller,8.9,N
+Snowpiercer,2020–,2020,,60,Action, Drama, Sci-Fi,6.9,N
+Buffy the Vampire Slayer,1997–2003,1997,2003,44,Action, Drama, Fantasy,8.2,N
+Beavis and Butt-Head,1993–2011,1993,2011,15,Animation, Comedy, Music,7.5,N
+Oz,1997–2003,1997,2003,55,Crime, Drama, Thriller,8.7,N
+The Office,2005–2013,2005,2013,22,Comedy,N/A,N/A,8.9,Y
+Everybody Loves Raymond,1996–2005,1996,2005,22,Comedy,N/A,N/A,7.1,N
+His Dark Materials,2019–,2019,,60,Adventure, Drama, Family,7.9,N
+The Pacific,2010,2010,2010,60,Action, Adventure, Drama,8.3,N
+Law & Order: Special Victims Unit,1999–,1999,,60,Crime, Drama, Mystery,8,Y
+Black Mirror,2011–,2011,,60,Drama, Sci-Fi, Thriller,8.8,N
+American Dad!,2005–,2005,,22,Animation, Comedy,N/A,7.3,Y
+Deadwood,2004–2006,2004,2006,55,Crime, Drama, History,8.6,N
+That '70s Show,1998–2006,1998,2006,22,Comedy, Romance,N/A,8,N
+Mad Men,2007–2015,2007,2015,47,Drama,N/A,N/A,8.6,N
+The Flintstones,1960–1966,1960,1966,26,Animation, Adventure, Comedy,7.5,N
+American Horror Story,2011–,2011,,60,Drama, Horror, Thriller,8,N
+Baywatch,1989–2001,1989,2001,60,Action, Adventure, Crime,5.3,N
+The Outsider,2020,2020,2020,60,Crime, Drama, Fantasy,7.7,N
+Heroes,2006-2010,2006,2010,45,Drama, Fantasy, Sci-Fi,7.5,Y
+The Following,2013–2015,2013,2015,43,Crime, Drama, Horror,7.4,N
+Futurama,1999–2013,1999,2013,22,Animation, Comedy, Sci-Fi,8.4,Y
+Fleabag,2016–2019,2016,2019,27,Comedy, Drama,N/A,8.7,N
+Penny Dreadful,2014–2016,2014,2016,60,Drama, Fantasy, Horror,8.2,N
+Agents of S.H.I.E.L.D.,2013–2020,2013,2020,45,Action, Adventure, Drama,7.5,N
+Spartacus: Blood and Sand,2010–2013,2010,2013,55,Action, Adventure, Biography,8.5,Y
+Supernatural,2005–2020,2005,2020,44,Drama, Fantasy, Horror,8.4,N
+How I Met Your Mother,2005–2014,2005,2014,22,Comedy, Romance,N/A,8.3,Y
+The Strain,2014–2017,2014,2017,43,Drama, Fantasy, Horror,7.3,N
+"Beverly Hills, 90210",1990–2000,1990,2000,44,Drama, Romance,N/A,6.4,N
+Gotham,2014–2019,2014,2019,42,Action, Crime, Drama,7.8,N
+Altered Carbon,2018–2020,2018,2020,60,Action, Drama, Sci-Fi,8,N
+La casa de papel,2017–2021,2017,2021,70,Action, Crime, Mystery,8.3,N
+MacGyver,1985–1992,1985,1992,48,Action, Adventure, Crime,7.7,N
+13 Reasons Why,2017–2020,2017,2020,60,Drama, Mystery, Thriller,7.6,N
+The Punisher,2017–2019,2017,2019,53,Action, Crime, Drama,8.5,N
+The Gifted,2017–2019,2017,2019,43,Action, Drama, Fantasy,7.3,N
+True Blood,2008–2014,2008,2014,55,Drama, Fantasy, Mystery,7.8,N
+BoJack Horseman,2014–2020,2014,2020,25,Animation, Comedy, Drama,8.7,N
+Modern Family,2009–2020,2009,2020,22,Comedy, Drama, Romance,8.4,Y
+The Queen's Gambit,2020,2020,2020,67,Drama,N/A,N/A,8.6,N
+Arrested Development,2003–2019,2003,2019,22,Comedy,N/A,N/A,8.7,N
+Ozark,2017–,2017,,60,Crime, Drama, Thriller,8.4,N
+Luke Cage,2016–2018,2016,2018,55,Action, Crime, Drama,7.3,Y
+Sons of Anarchy,2008–2014,2008,2014,45,Crime, Drama, Thriller,8.5,Y
+SpongeBob SquarePants,1999–,1999,,23,Animation, Comedy, Family,8.2,Y
+Jessica Jones,2015–2019,2015,2019,56,Action, Crime, Drama,7.9,Y
+The Fresh Prince of Bel-Air,1990–1996,1990,1996,22,Comedy,N/A,N/A,7.9,N
+Alias,2001–2006,2001,2006,42,Action, Drama, Mystery,7.6,Y
+Tales from the Crypt,1989–1996,1989,1996,25,Comedy, Crime, Fantasy,8,N
+Orange Is the New Black,2013–2019,2013,2019,59,Comedy, Crime, Drama,8,Y
