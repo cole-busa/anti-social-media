@@ -4,4 +4,9 @@ How do we break into the over-saturated market of social media platforms? :think
 
 This project uses React.js as the front-end with Axios for REST requests and Material UI for premade components. The back-end consists of Spring Boot alongside a MySQL database to store user info. :grinning:
 
+The datasets used are below. Any data cleaning can be found under data/data_cleaning.py.
+[TV Shows](https://www.kaggle.com/datasets/jackjaehwankim/top-100-tv-shows)
+[Movies](https://gist.github.com/stungeye/a3af50385215b758637e73eaacac93a3)
+[Video Games](https://corgis-edu.github.io/corgis/csv/video_games/)
+
 TODO: Add movie lists, TV show lists, and video game lists for each user to search from and display. Calculate a total anti-social score that shows at the top of their profile. 
