@@ -16,6 +16,10 @@ public class TVShowService {
     @Autowired
     private TVShowRepository tvShowRepository;
 
+    public Iterable<TVShow> listAll() {
+		return tvShowRepository.findAll();
+	}
+
     public Optional<TVShow> findTVShowByTitle(String title) {
         return tvShowRepository.findByTitle(title);
     }

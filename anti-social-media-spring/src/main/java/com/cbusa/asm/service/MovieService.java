@@ -16,6 +16,10 @@ public class MovieService {
     @Autowired
     private MovieRepository movieRepository;
 
+    public Iterable<Movie> listAll() {
+		return movieRepository.findAll();
+	}
+
     public Optional<Movie> findMovieByTitle(String title) {
         return movieRepository.findByTitle(title);
     }

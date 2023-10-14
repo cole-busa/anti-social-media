@@ -16,6 +16,10 @@ public class VideoGameService {
     @Autowired
     private VideoGameRepository videoGameRepository;
 
+    public Iterable<VideoGame> listAll() {
+		return videoGameRepository.findAll();
+	}
+
     public Optional<VideoGame> findVideoGameByTitle(String title) {
         return videoGameRepository.findByTitle(title);
     }
