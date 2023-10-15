@@ -1,5 +1,6 @@
 package com.cbusa.asm.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +15,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cbusa.asm.domain.Friend;
 import com.cbusa.asm.domain.User;
+import com.cbusa.asm.domain.UserMovie;
+import com.cbusa.asm.domain.UserTVShow;
+import com.cbusa.asm.domain.UserVideoGame;
 import com.cbusa.asm.service.FriendService;
+import com.cbusa.asm.service.UserMovieService;
 import com.cbusa.asm.service.UserService;
+import com.cbusa.asm.service.UserTVShowService;
+import com.cbusa.asm.service.UserVideoGameService;
 
 @RestController
 @RequestMapping("/User")
@@ -26,6 +33,15 @@ public class UserController {
 
 	@Autowired
 	private FriendService friendService;
+
+	@Autowired
+	private UserMovieService userMovieService;
+
+	@Autowired
+	private UserTVShowService userTVShowService;
+
+	@Autowired
+	private UserVideoGameService userVideoGameService;
 
 	@GetMapping("/")
 	public Iterable<User> getAllUsers() {
@@ -40,6 +56,21 @@ public class UserController {
 	@GetMapping("/Id/{id}")
 	public User getUserById(@PathVariable Integer id) {
 		return userService.findUserById(id).get();
+	}
+
+	@GetMapping("/UserMovie/{userId}")
+	public List<UserMovie> getUserMovieByUserId(@PathVariable Integer userId) {
+		return userMovieService.findUserMovieByUserId(userId);
+	}
+
+	@GetMapping("/UserTVShow/{userId}")
+	public List<UserTVShow> getUserTVShowByUserId(@PathVariable Integer userId) {
+		return userTVShowService.findUserTVShowByUserId(userId);
+	}
+
+	@GetMapping("/UserVideoGame/{userId}")
+	public List<UserVideoGame> getUserVideoGameByUserId(@PathVariable Integer userId) {
+		return userVideoGameService.findUserVideoGameByUserId(userId);
 	}
 
 	@PutMapping("/Friends/{username}/{newFriend}")

@@ -13,18 +13,22 @@ import jakarta.transaction.Transactional;
 @Service
 @Transactional
 public class VideoGameService {
-    @Autowired
-    private VideoGameRepository videoGameRepository;
+  @Autowired
+  private VideoGameRepository videoGameRepository;
 
-    public Iterable<VideoGame> listAll() {
-		return videoGameRepository.findAll();
+  public Iterable<VideoGame> listAll() {
+    return videoGameRepository.findAll();
 	}
 
-    public Optional<VideoGame> findVideoGameByTitle(String title) {
-        return videoGameRepository.findByTitle(title);
-    }
+  public Optional<VideoGame> findVideoGameByTitle(String title) {
+    return videoGameRepository.findByTitle(title);
+  }
 
-    public void addVideoGame(VideoGame videoGame) {
+  public Optional<VideoGame> findVideoGameById(Integer id) {
+    return videoGameRepository.findById(id);
+  }
+
+  public void addVideoGame(VideoGame videoGame) {
 		videoGameRepository.save(videoGame);
 	}
 

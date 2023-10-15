@@ -26,4 +26,9 @@ public class VideoGameController {
 	public VideoGame getVideoGameByTitle(@PathVariable String title) {
 		return videoGameService.findVideoGameByTitle(title).get();
 	}
+
+	@GetMapping("/Id/{id}")
+	public VideoGame getVideoGameById(@PathVariable Integer id) {
+		return videoGameService.findVideoGameById(id).get();
+	}
 }

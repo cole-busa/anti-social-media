@@ -13,19 +13,23 @@ import jakarta.transaction.Transactional;
 @Service
 @Transactional
 public class MovieService {
-    @Autowired
-    private MovieRepository movieRepository;
+  @Autowired
+  private MovieRepository movieRepository;
 
-    public Iterable<Movie> listAll() {
-		return movieRepository.findAll();
-	}
+  public Iterable<Movie> listAll() {
+    return movieRepository.findAll();
+  }
 
-    public Optional<Movie> findMovieByTitle(String title) {
-        return movieRepository.findByTitle(title);
-    }
+  public Optional<Movie> findMovieByTitle(String title) {
+    return movieRepository.findByTitle(title);
+  }
 
-    public void addMovie(Movie movie) {
-		movieRepository.save(movie);
+  public Optional<Movie> findMovieById(Integer id) {
+    return movieRepository.findById(id);
+  }
+
+  public void addMovie(Movie movie) {
+    movieRepository.save(movie);
 	}
 
 	public void updateMovie(Movie movie) {

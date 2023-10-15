@@ -26,4 +26,9 @@ public class TVShowController {
 	public TVShow getTVShowByTitle(@PathVariable String title) {
 		return tvShowService.findTVShowByTitle(title).get();
 	}
+
+	@GetMapping("/Id/{id}")
+	public TVShow getTVShowById(@PathVariable Integer id) {
+		return tvShowService.findTVShowById(id).get();
+	}
 }
