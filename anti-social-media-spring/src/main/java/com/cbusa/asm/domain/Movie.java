@@ -1,10 +1,14 @@
 package com.cbusa.asm.domain;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -20,16 +24,19 @@ public class Movie {
     @Column(name = "Runtime")
     private String runtime;
 
+    @OneToMany(mappedBy = "movie")
+    private List<UserMovie> userMovies;
+
     public Movie() {
         this.title = "";
         this.runtime = "";
+        this.userMovies = new ArrayList<UserMovie>();
     }
 
     public Movie(String title, String runtime) {
         this.title = title;
         this.runtime = runtime;
     }
-
 
     public Integer getId() {
         return this.id;
@@ -53,5 +60,17 @@ public class Movie {
 
     public void setRuntime(String runtime) {
         this.runtime = runtime;
+    }
+    
+    public List<UserMovie> getUserMovies() {
+        return this.userMovies;
+    }
+
+    public void setUserMovies(List<UserMovie> userMovies) {
+        this.userMovies = userMovies;
+    }
+
+    public void addUserMovie(UserMovie userMovie) {
+        userMovies.add(userMovie);
     }
 }

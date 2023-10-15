@@ -25,22 +25,39 @@ public class User {
     @Column(name = "Password")
     private String password;
 
+    @Column(name = "AntiSocialScore")
+    private Integer antiSocialScore;
+
     @OneToMany
     @JoinColumn(name = "User_Id")
     private List<Friend> friends;
+
+    @OneToMany(mappedBy = "user")
+    private List<UserMovie> userMovies;
+
+    @OneToMany(mappedBy = "user")
+    private List<UserTVShow> userTVShows;
+
+    @OneToMany(mappedBy = "user")
+    private List<UserVideoGame> userVideoGames;
 
     public User() {
         this.username = "";
         this.password = "";
         this.friends = new ArrayList<Friend>();
+        this.userMovies = new ArrayList<UserMovie>();
+        this.userTVShows = new ArrayList<UserTVShow>();
+        this.userVideoGames = new ArrayList<UserVideoGame>();
     }
 
     public User(String username, String password) {
         this.username = username;
         this.password = password;
         this.friends = new ArrayList<Friend>();
+        this.userMovies = new ArrayList<UserMovie>();
+        this.userTVShows = new ArrayList<UserTVShow>();
+        this.userVideoGames = new ArrayList<UserVideoGame>();
     }
-
 
     public Integer getId() {
         return this.id;
@@ -66,6 +83,14 @@ public class User {
         this.password = password;
     }
 
+    public Integer getAntiSocialScore() {
+        return this.antiSocialScore;
+    }
+
+    public void setAntiSocialScore(Integer antiSocialScore) {
+        this.antiSocialScore = antiSocialScore;
+    }
+
     public List<Friend> getFriends() {
         return this.friends;
     }
@@ -76,5 +101,41 @@ public class User {
 
     public void addFriend(Friend friend) {
         friends.add(friend);
+    }
+
+    public List<UserMovie> getUserMovies() {
+        return this.userMovies;
+    }
+
+    public void setUserMovies(List<UserMovie> userMovies) {
+        this.userMovies = userMovies;
+    }
+
+    public void addUserMovie(UserMovie userMovie) {
+        userMovies.add(userMovie);
+    }
+
+    public List<UserTVShow> getUserTVShows() {
+        return this.userTVShows;
+    }
+
+    public void setUserTVShows(List<UserTVShow> userTVShows) {
+        this.userTVShows = userTVShows;
+    }
+
+    public void addUserTVShow(UserTVShow userTVShow) {
+        userTVShows.add(userTVShow);
+    }
+
+    public List<UserVideoGame> getUserVideoGames() {
+        return this.userVideoGames;
+    }
+
+    public void setUserVideoGames(List<UserVideoGame> userVideoGames) {
+        this.userVideoGames = userVideoGames;
+    }
+
+    public void addUserVideoGame(UserVideoGame userVideoGame) {
+        userVideoGames.add(userVideoGame);
     }
 }
