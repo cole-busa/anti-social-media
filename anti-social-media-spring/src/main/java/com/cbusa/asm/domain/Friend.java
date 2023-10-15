@@ -21,7 +21,7 @@ public class Friend {
     @Column(name = "Friendname")
     private String friendName;
 
-    @Column(name = "User_Id")
+    @Column(name = "UserId")
     private Integer userId;
 
     public Friend() {

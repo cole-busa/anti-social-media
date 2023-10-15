@@ -29,7 +29,7 @@ public class User {
     private Integer antiSocialScore;
 
     @OneToMany
-    @JoinColumn(name = "User_Id")
+    @JoinColumn(name = "UserId")
     private List<Friend> friends;
 
     @OneToMany(mappedBy = "user")
@@ -44,6 +44,7 @@ public class User {
     public User() {
         this.username = "";
         this.password = "";
+        this.antiSocialScore = 0;
         this.friends = new ArrayList<Friend>();
         this.userMovies = new ArrayList<UserMovie>();
         this.userTVShows = new ArrayList<UserTVShow>();
@@ -53,6 +54,7 @@ public class User {
     public User(String username, String password) {
         this.username = username;
         this.password = password;
+        this.antiSocialScore = 0;
         this.friends = new ArrayList<Friend>();
         this.userMovies = new ArrayList<UserMovie>();
         this.userTVShows = new ArrayList<UserTVShow>();
