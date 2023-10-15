@@ -4,6 +4,7 @@ How do we break into the over-saturated market of social media platforms? :think
 
 This project uses React.js as the front-end with Axios for REST requests and Material UI for premade components. The back-end consists of Spring Boot alongside a MySQL database to store user info. :grinning:
 
+
 The datasets used are below. Any data cleaning can be found under data/data_cleaning.py.
 
 [TV Shows](https://www.kaggle.com/datasets/jackjaehwankim/top-100-tv-shows)
@@ -11,5 +12,39 @@ The datasets used are below. Any data cleaning can be found under data/data_clea
 [Movies](https://gist.github.com/stungeye/a3af50385215b758637e73eaacac93a3)
 
 [Video Games](https://corgis-edu.github.io/corgis/csv/video_games/)
+
+
+If you want to try it for yourself, you can download this repository.
+
+To start the Spring Boot application, navigate to the anti-social-media-spring folder and run
+
+./mvnw spring-boot:run
+
+
+To start the React application, navigate to the anti-social-media-react folder and run
+
+npm start
+
+
+To start the MySQL database, just make sure you have Docker installed and run the following commands:
+
+docker run --name=anti_social_container -d -p 13306:3306 colebusa/anti_social_repository:anti_social_image
+
+docker exec -it anti_social_container bash
+
+mysql -uroot -p
+
+Then enter the password: Password
+
+Next create the database from the following commands:
+
+CREATE DATABASE anti_social_database;
+
+USE anti_social_database;
+
+SOURCE /anti_social_database.sql;
+
+Now the database is up and running on port 13306.
+
 
 TODO: Add movie lists, TV show lists, and video game lists for each user to search from and display. Calculate a total anti-social score that shows at the top of their profile. 
