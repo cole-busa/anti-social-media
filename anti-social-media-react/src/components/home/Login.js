@@ -24,7 +24,7 @@ const Login = () => {
         const data = new FormData(e.currentTarget);
         const username = data.get('username');
         const password = data.get('password');
-        
+        setUsers(localStorage.getItem('users'));
         if (username.length > 0 && password.length > 0) {
             let match = false;
             for (let i = 0; i < users.length; i++) {
@@ -36,7 +36,6 @@ const Login = () => {
             if (match) {
                 setErrorMessage("");
                 localStorage.setItem('currentUser', username);
-                //setCurrentUser(username);
                 navigate("/home");
             } else {
                 setErrorMessage("Username or Password is incorrect.");
@@ -46,7 +45,7 @@ const Login = () => {
     
     useEffect(() => {
         setUser();
-    },[])
+    },[]);
 
     const defaultTheme = createTheme();
 

@@ -15,6 +15,7 @@ const CreateAccount = () => {
         try {
             const response = await api.get("/User/");
             setUsers(response.data);
+            localStorage.setItem('users', response.data);
         } catch (e) {
             console.log(e);
         }
@@ -47,8 +48,11 @@ const CreateAccount = () => {
                             headers: { 'Content-Type': 'application/json' },
                             withCredentials: false
                         }
-                    ).then(response => {console.log(response)});
-                    navigate("/");
+                    );
+                    setUser().then(() => {
+                        navigate("/");
+                    });
+                    
                     break;
                 case (usernameMatch && passwordsMatch):
                     setUsernameErrorMessage("Username already exists.");
