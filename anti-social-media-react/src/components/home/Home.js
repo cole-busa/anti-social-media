@@ -12,6 +12,7 @@ const Home = () => {
     const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
     const [users, setUsers] = useState();
+    const [allUsers, setAllUsers] = useState();
     const [friends, setFriends] = useState();
     const [loadingUsers, setLoadingUsers] = useState(true);
     const [loadingFriends, setLoadingFriends] = useState(true);
@@ -31,10 +32,16 @@ const Home = () => {
         navigate("/profile");
     }
 
+    function higherScore(a, b) {
+        return a.antiSocialScore <= b.antiSocialScore;
+    }
+
     const setCurrentUsersAndFriends = async () => {
         try {
             const friendResponse = await api.get("/Friend/" + currentUser);
             const userResponse = await api.get("/User/");
+            userResponse.data.sort(higherScore);
+            setAllUsers(userResponse.data);
             const userFilter = [];
             userFilter.push(currentUser);
             if (friendResponse === null) {
@@ -145,6 +152,42 @@ const Home = () => {
                                     <Button variant="contained" onClick={() => handleViewProfile(friend.friendName)}>
                                         View Profile
                                     </Button>
+                                </Box>
+                            ))}
+                        </Box>
+                    )}
+                </Drawer>
+                <Drawer
+                    sx={{
+                        width: 240,
+                        flexShrink: 0,
+                        bgcolor: 'background.paper',
+                        '& .MuiDrawer-paper': {
+                            width: 240,
+                            boxSizing: 'border-box',
+                            marginTop: 8,
+                        },
+                    }}
+                    variant="permanent"
+                    anchor="right"
+                >
+                    {loadingUsers ? (
+                        <Typography>Loading users...</Typography>
+                    ) : (
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                            }}
+                        >
+                            <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                                <Typography fontWeight='bold' color='blue' sx={{ textDecoration: 'underline' }}>Top Users</Typography>
+                                <Typography fontWeight='bold' color='blue' sx={{ textDecoration: 'underline' }}>User Score</Typography>
+                            </Box>
+                            {allUsers.map((user) => (
+                                <Box key={[user.username]} sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                                    <Typography>{user.username}</Typography>
+                                    <Typography>{user.antiSocialScore}</Typography>
                                 </Box>
                             ))}
                         </Box>
