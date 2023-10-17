@@ -27,6 +27,11 @@ public class UserTVShow {
         
     }
 
+    public UserTVShow(User user, TVShow tvShow) {
+        this.user = user;
+        this.tvShow = tvShow;
+    }
+
     public Integer getId() {
         return this.id;
     }

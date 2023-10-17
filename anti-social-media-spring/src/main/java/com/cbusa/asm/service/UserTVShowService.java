@@ -16,6 +16,10 @@ public class UserTVShowService {
     @Autowired
     private UserTVShowRepository userTVShowRepository;
 
+    public List<UserTVShow> listAll() {
+        return userTVShowRepository.findAll();
+    }
+
     public List<UserTVShow> findUserTVShowByUserId(Integer id) {
         return userTVShowRepository.findByUserId(id);
     }

@@ -27,6 +27,11 @@ public class UserVideoGame {
         
     }
 
+    public UserVideoGame(User user, VideoGame videoGame) {
+        this.user = user;
+        this.videoGame = videoGame;
+    }
+
     public Integer getId() {
         return this.id;
     }

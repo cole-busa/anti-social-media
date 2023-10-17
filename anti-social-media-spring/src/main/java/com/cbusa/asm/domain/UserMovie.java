@@ -27,6 +27,11 @@ public class UserMovie {
         
     }
 
+    public UserMovie(User user, Movie movie) {
+        this.user = user;
+        this.movie = movie;
+    }
+
     public Integer getId() {
         return this.id;
     }

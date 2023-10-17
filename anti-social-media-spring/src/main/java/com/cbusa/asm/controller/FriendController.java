@@ -1,6 +1,7 @@
 package com.cbusa.asm.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -32,8 +33,13 @@ public class FriendController {
 
     @PostMapping("/{username}/{friendName}")
     public void createFriend (@PathVariable String username, @PathVariable String friendName) {
-        User user = userService.findUserByName(username).get();
-        Friend friend = new Friend(user, friendName);
-        friendService.addFriend(friend);
+        Optional<User> optionalUser = userService.findUserByName(username);
+		if (optionalUser.isPresent()) {
+			User user = optionalUser.get();
+			Friend friend = new Friend(user, friendName);
+			if (!friendService.findFriendByUser(user.getUsername()).contains(friend)) {
+				friendService.addFriend(friend);
+			}
+		}
     }
 }

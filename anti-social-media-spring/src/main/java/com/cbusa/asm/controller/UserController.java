@@ -1,6 +1,5 @@
 package com.cbusa.asm.controller;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,15 +13,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cbusa.asm.domain.Friend;
+import com.cbusa.asm.domain.Movie;
+import com.cbusa.asm.domain.TVShow;
 import com.cbusa.asm.domain.User;
 import com.cbusa.asm.domain.UserMovie;
 import com.cbusa.asm.domain.UserTVShow;
 import com.cbusa.asm.domain.UserVideoGame;
-import com.cbusa.asm.service.FriendService;
-import com.cbusa.asm.service.UserMovieService;
+import com.cbusa.asm.domain.VideoGame;
+import com.cbusa.asm.service.MovieService;
+import com.cbusa.asm.service.TVShowService;
 import com.cbusa.asm.service.UserService;
-import com.cbusa.asm.service.UserTVShowService;
-import com.cbusa.asm.service.UserVideoGameService;
+import com.cbusa.asm.service.VideoGameService;
 
 @RestController
 @RequestMapping("/User")
@@ -32,16 +33,13 @@ public class UserController {
 	private UserService userService;
 
 	@Autowired
-	private FriendService friendService;
+	private MovieService movieService;
 
 	@Autowired
-	private UserMovieService userMovieService;
+	private VideoGameService videoGameService;
 
 	@Autowired
-	private UserTVShowService userTVShowService;
-
-	@Autowired
-	private UserVideoGameService userVideoGameService;
+	private TVShowService tvShowService;
 
 	@GetMapping("/")
 	public Iterable<User> getAllUsers() {
@@ -58,31 +56,50 @@ public class UserController {
 		return userService.findUserById(id).get();
 	}
 
-	@GetMapping("/UserMovie/{userId}")
-	public List<UserMovie> getUserMovieByUserId(@PathVariable Integer userId) {
-		return userMovieService.findUserMovieByUserId(userId);
-	}
-
-	@GetMapping("/UserTVShow/{userId}")
-	public List<UserTVShow> getUserTVShowByUserId(@PathVariable Integer userId) {
-		return userTVShowService.findUserTVShowByUserId(userId);
-	}
-
-	@GetMapping("/UserVideoGame/{userId}")
-	public List<UserVideoGame> getUserVideoGameByUserId(@PathVariable Integer userId) {
-		return userVideoGameService.findUserVideoGameByUserId(userId);
-	}
-
 	@PutMapping("/Friends/{username}/{newFriend}")
 	public void addFriend(@PathVariable String username, @PathVariable String newFriend) {
 		Optional<User> optionalUser = userService.findUserByName(username);
 		if (optionalUser.isPresent()) {
 			User user = optionalUser.get();
 			Friend friend = new Friend(user, newFriend);
-			if (!friendService.findFriendByUser(user.getUsername()).contains(friend)) {
-				user.addFriend(friend);
-				userService.updateUser(user);
-			}
+			user.addFriend(friend);
+			userService.updateUser(user);
+		}
+	}
+
+	@PutMapping("/UserMovies/{username}/{title}")
+	public void addUserMovie(@PathVariable String username, @PathVariable String title) {
+		Optional<User> optionalUser = userService.findUserByName(username);
+		Optional<Movie> optionalMovie = movieService.findMovieByTitle(title);
+		if (optionalUser.isPresent() && optionalMovie.isPresent()) {
+			User user = optionalUser.get();
+			Movie movie = optionalMovie.get();
+			UserMovie userMovie = new UserMovie(user, movie);
+			user.addUserMovie(userMovie);
+		}
+	}
+
+	@PutMapping("/UserVideoGames/{username}/{title}")
+	public void addUserVideoGame(@PathVariable String username, @PathVariable String title) {
+		Optional<User> optionalUser = userService.findUserByName(username);
+		Optional<VideoGame> optionalVideoGame = videoGameService.findVideoGameByTitle(title);
+		if (optionalUser.isPresent() && optionalVideoGame.isPresent()) {
+			User user = optionalUser.get();
+			VideoGame videoGame = optionalVideoGame.get();
+			UserVideoGame userVideoGame = new UserVideoGame(user, videoGame);
+			user.addUserVideoGame(userVideoGame);
+		}
+	}
+
+	@PutMapping("/UserTVShows/{username}/{title}")
+	public void addUserTVShow(@PathVariable String username, @PathVariable String title) {
+		Optional<User> optionalUser = userService.findUserByName(username);
+		Optional<TVShow> optionalTVShow = tvShowService.findTVShowByTitle(title);
+		if (optionalUser.isPresent() && optionalTVShow.isPresent()) {
+			User user = optionalUser.get();
+			TVShow tvShow = optionalTVShow.get();
+			UserTVShow userTVShow = new UserTVShow(user, tvShow);
+			user.addUserTVShow(userTVShow);
 		}
 	}
 

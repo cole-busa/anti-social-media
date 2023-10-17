@@ -16,6 +16,10 @@ public class UserMovieService {
     @Autowired
     private UserMovieRepository userMovieRepository;
 
+    public List<UserMovie> listAll() {
+        return userMovieRepository.findAll();
+    }
+
     public List<UserMovie> findUserMovieByUserId(Integer id) {
         return userMovieRepository.findByUserId(id);
     }

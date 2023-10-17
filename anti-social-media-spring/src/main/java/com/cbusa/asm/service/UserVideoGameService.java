@@ -16,6 +16,10 @@ public class UserVideoGameService {
     @Autowired
     private UserVideoGameRepository userVideoGameRepository;
 
+    public List<UserVideoGame> listAll() {
+        return userVideoGameRepository.findAll();
+    }
+
     public List<UserVideoGame> findUserVideoGameByUserId(Integer id) {
         return userVideoGameRepository.findByUserId(id);
     }
