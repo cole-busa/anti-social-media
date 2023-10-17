@@ -2,19 +2,20 @@ import React, { useEffect, useState } from 'react';
 
 import api from '../../api/axiosConfig';
 import { useNavigate } from 'react-router-dom';
+import PerfectScrollbar from "react-perfect-scrollbar";
 import { AppBar, Box, Button, Card, CardActions, CardContent, CardMedia, Container, CssBaseline, Drawer, Grid, Stack, ThemeProvider, Toolbar, Typography, createTheme } from '@mui/material';
 
 const Profile = () => {
     const navigate = useNavigate();
     const currentUser = localStorage.getItem('currentUser');
-    const currentProfile = localStorage.getItem('currentProfile');
     const defaultTheme = createTheme();
-    const anti_social_score = 1;
     const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
     const [users, setUsers] = useState();
     const [allUsers, setAllUsers] = useState();
     const [friends, setFriends] = useState();
+    const [currentProfile, setCurrentProfile] = useState(localStorage.getItem('currentProfile'));
+    const [antiSocialScore, setAntiSocialScore] = useState(1);
     const [loadingUsers, setLoadingUsers] = useState(true);
     const [loadingFriends, setLoadingFriends] = useState(true);
     const [noFriends, setNoFriends] = useState(false);
@@ -39,13 +40,18 @@ const Profile = () => {
 
     const handleViewProfile = (friendName) => {
         localStorage.setItem('currentProfile', friendName);
-        navigate("/profile");
+        setCurrentUsersAndFriends().then(() => {
+            window.location.reload();
+        });
     }
 
     const setCurrentUsersAndFriends = async () => {
         try {
+            setCurrentProfile(localStorage.getItem('currentProfile'));
             const friendResponse = await api.get("/Friend/" + currentUser);
             const userResponse = await api.get("/User/");
+            const currentUserResponse = await api.get("/User/Name/" + currentProfile);
+            setAntiSocialScore(currentUserResponse.data.antiSocialScore);
             userResponse.data.sort(higherScore);
             setAllUsers(userResponse.data);
             const userFilter = [];
@@ -201,67 +207,69 @@ const Profile = () => {
                         </Box>
                     )}
                 </Drawer>
-                <Box
-                    sx={{
-                        bgcolor: 'background.paper',
-                        pt: 8,
-                        pb: 6,
-                        marginTop: 8,
-                    }}
-                >
-                    <Container maxWidth="sm">
-                        <Typography
-                            variant="h1"
-                            align="center"
-                            color="text.primary"
-                        >
-                            {currentProfile}
-                        </Typography>
-                        <Typography variant="h5" align="center" color="purple" fontWeight='bold' paragraph>
-                            Anti-Social Score: {anti_social_score}
-                        </Typography>
-                        <Stack
-                            sx={{ pt: 4 }}
-                            direction="row"
-                            spacing={2}
-                            justifyContent="center"
-                        >
-                        </Stack>
+                <PerfectScrollbar suppressScrollX={true} suppressScrollY={true}>
+                    <Box
+                        sx={{
+                            bgcolor: 'background.paper',
+                            pt: 8,
+                            pb: 6,
+                            marginTop: 8,
+                        }}
+                    >
+                        <Container maxWidth="sm">
+                            <Typography
+                                variant="h1"
+                                align="center"
+                                color="text.primary"
+                            >
+                                {currentProfile}
+                            </Typography>
+                            <Typography variant="h5" align="center" color="purple" fontWeight='bold' paragraph>
+                                Anti-Social Score: {antiSocialScore}
+                            </Typography>
+                            <Stack
+                                sx={{ pt: 4 }}
+                                direction="row"
+                                spacing={2}
+                                justifyContent="center"
+                            >
+                            </Stack>
+                        </Container>
+                    </Box>
+                    <Container sx={{ py: 8 }} maxWidth="md">
+                        <Grid container spacing={4}>
+                            {cards.map((card) => (
+                                <Grid item key={card} xs={12} sm={6} md={4}>
+                                    <Card
+                                        sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
+                                    >
+                                        <CardMedia
+                                            component="div"
+                                            sx={{
+                                                // 16:9
+                                                pt: '56.25%',
+                                            }}
+                                            image="https://source.unsplash.com/random?wallpapers"
+                                        />
+                                        <CardContent sx={{ flexGrow: 1 }}>
+                                            <Typography gutterBottom variant="h5" component="h2">
+                                                Heading
+                                            </Typography>
+                                            <Typography>
+                                                This is a media card. You can use this section to describe the
+                                                content.
+                                            </Typography>
+                                        </CardContent>
+                                        <CardActions>
+                                            <Button size="small">View</Button>
+                                            <Button size="small">Edit</Button>
+                                        </CardActions>
+                                    </Card>
+                                </Grid>
+                            ))}
+                        </Grid>
                     </Container>
-                </Box>
-                <Container sx={{ py: 8 }} maxWidth="md">
-                    <Grid container spacing={4}>
-                        {cards.map((card) => (
-                            <Grid item key={card} xs={12} sm={6} md={4}>
-                                <Card
-                                    sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
-                                >
-                                    <CardMedia
-                                        component="div"
-                                        sx={{
-                                            // 16:9
-                                            pt: '56.25%',
-                                        }}
-                                        image="https://source.unsplash.com/random?wallpapers"
-                                    />
-                                    <CardContent sx={{ flexGrow: 1 }}>
-                                        <Typography gutterBottom variant="h5" component="h2">
-                                            Heading
-                                        </Typography>
-                                        <Typography>
-                                            This is a media card. You can use this section to describe the
-                                            content.
-                                        </Typography>
-                                    </CardContent>
-                                    <CardActions>
-                                        <Button size="small">View</Button>
-                                        <Button size="small">Edit</Button>
-                                    </CardActions>
-                                </Card>
-                            </Grid>
-                        ))}
-                    </Grid>
-                </Container>
+                </PerfectScrollbar>
             </main>
         </ThemeProvider>
     );

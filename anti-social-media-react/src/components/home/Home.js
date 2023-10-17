@@ -8,12 +8,12 @@ const Home = () => {
     const navigate = useNavigate();
     const currentUser = localStorage.getItem('currentUser');
     const defaultTheme = createTheme();
-    const anti_social_score = 1;
     const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
     const [users, setUsers] = useState();
     const [allUsers, setAllUsers] = useState();
     const [friends, setFriends] = useState();
+    const [antiSocialScore, setAntiSocialScore] = useState(1);
     const [loadingUsers, setLoadingUsers] = useState(true);
     const [loadingFriends, setLoadingFriends] = useState(true);
     const [noFriends, setNoFriends] = useState(false);
@@ -40,6 +40,8 @@ const Home = () => {
         try {
             const friendResponse = await api.get("/Friend/" + currentUser);
             const userResponse = await api.get("/User/");
+            const currentUserResponse = await api.get("/User/Name/" + currentUser);
+            setAntiSocialScore(currentUserResponse.data.antiSocialScore);
             userResponse.data.sort(higherScore);
             setAllUsers(userResponse.data);
             const userFilter = [];
@@ -210,7 +212,7 @@ const Home = () => {
                             {currentUser}
                         </Typography>
                         <Typography variant="h5" align="center" color="purple" fontWeight='bold' paragraph>
-                            Anti-Social Score: {anti_social_score}
+                            Anti-Social Score: {antiSocialScore}
                         </Typography>
                         <Stack
                             sx={{ pt: 4 }}
