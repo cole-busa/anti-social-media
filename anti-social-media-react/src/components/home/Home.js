@@ -22,14 +22,15 @@ const Home = () => {
     const [videoGames, setVideoGames] = useState();
     const [tvShows, setTVShows] = useState();
     const [edit, setEdit] = useState(false);
-    const [moviesInput, setMoviesInput] = useState();
-    const [tvShowsInput, setTVShowsInput] = useState();
-    const [videoGamesInput, setVideoGamesInput] = useState();
+    const [moviesInput, setMoviesInput] = useState([]);
+    const [tvShowsInput, setTVShowsInput] = useState([]);
+    const [videoGamesInput, setVideoGamesInput] = useState([]);
     const [userMovies, setUserMovies] = useState();
     const [userTVShows, setUserTVShows] = useState();
     const [userVideoGames, setUserVideoGames] = useState();
     const [loadingEditList, setLoadingEditList] = useState(true);
     const [loadingUserEditList, setLoadingUserEditList] = useState(true);
+    const [initializeInput, setInitializeInput] = useState(true);
     
     const handleSendFriendRequest = (friendName) => {
         api.post("/Friend/" + currentUser + "/" + friendName);
@@ -49,89 +50,94 @@ const Home = () => {
     }
 
     const handleSave = () => {
-        let moviesToPost = undefined;
-        let moviesToDelete = undefined;
-        if (moviesInput !== undefined && userMovies !== undefined) {
-            moviesToPost = moviesInput.filter(x => !userMovies.includes(x));
-            moviesToDelete = userMovies.filter(x => !moviesInput.includes(x));
-        } else if (moviesInput === undefined) {
-            moviesToDelete = userMovies;
-        } else if (userMovies === undefined) {
-            moviesToPost = moviesInput;
-        }
-        if (moviesToPost !== undefined) {
-            for (const movie of moviesToPost) {
-                api.post("/UserMovie/" + currentUser + "/" + movie);
-                api.put("/User/AddUserMovies/" + currentUser + "/" + movie);
-                api.put("/Movie/AddUserMovies/" + currentUser + "/" + movie);
-            }
-        }
-        if (moviesToDelete !== undefined) {
-            for (const movie of moviesToDelete) {
-                api.delete("/UserMovie/" + currentUser + "/" + movie);
-                api.put("/User/DeleteUserMovies/" + currentUser + "/" + movie);
-                api.put("/Movie/DeleteUserMovies/" + currentUser + "/" + movie);
-            }
-        }
-
-        let tvShowsToPost = undefined;
-        let tvShowsToDelete = undefined;
-        if (tvShowsInput !== undefined && userTVShows !== undefined) {
-            tvShowsToPost = tvShowsInput.filter(x => !userTVShows.includes(x));
-            tvShowsToDelete = userTVShows.filter(x => !tvShowsInput.includes(x));
-        } else if (tvShowsInput === undefined) {
-            tvShowsToDelete = userTVShows;
-        } else if (userTVShows === undefined) {
-            tvShowsToPost = tvShowsInput;
-        }
-        if (tvShowsToPost !== undefined) {
-            for (const tvShow of tvShowsToPost) {
-                api.post("/UserTVShow/" + currentUser + "/" + tvShow);
-                api.put("/User/AddUserTVShows/" + currentUser + "/" + tvShow);
-                api.put("/TVShow/AddUserTVShows/" + currentUser + "/" + tvShow);
-            }
-        }
-        if (tvShowsToDelete !== undefined) {
-            for (const tvShow of tvShowsToDelete) {
-                api.delete("/UserMovie/" + currentUser + "/" + tvShow);
-                api.put("/User/DeleteUserTVShows/" + currentUser + "/" + tvShow);
-                api.put("/TVShow/DeleteUserTVShows/" + currentUser + "/" + tvShow);
-            }
-        }
-
-        let videoGamesToPost = undefined;
-        let videoGamesToDelete = undefined;
-        if (videoGamesInput !== undefined && userVideoGames !== undefined) {
-            videoGamesToPost = videoGamesInput.filter(x => !userVideoGames.includes(x));
-            videoGamesToDelete = userVideoGames.filter(x => !videoGamesInput.includes(x));
-        } else if (videoGamesInput === undefined) {
-            videoGamesToDelete = userVideoGames;
-        } else if (userVideoGames === undefined) {
-            videoGamesToPost = videoGamesInput;
-        }
-        if (videoGamesToPost !== undefined) {
-            for (const videoGame of videoGamesToPost) {
-                api.post("/UserVideoGame/" + currentUser + "/" + videoGame);
-                api.put("/User/AddUserVideoGames/" + currentUser + "/" + videoGame);
-                api.put("/VideoGame/AddUserVideoGames/" + currentUser + "/" + videoGame);
-            }
-        }
-        if (videoGamesToDelete !== undefined) {
-            for (const videoGame of videoGamesToDelete) {
-                api.delete("/UserMovie/" + currentUser + "/" + videoGame);
-                api.put("/User/DeleteUserVideoGames/" + currentUser + "/" + videoGame);
-                api.put("/VideoGame/DeleteUserVideoGames/" + currentUser + "/" + videoGame);
-            }
-        }
-
-        setUserMoviesTVShowsAndVideoGames().then(() => {
-            setEdit(false);
+        updateUserInfo().then(() => {
+            setUserMoviesTVShowsAndVideoGames().then(() => {
+                setEdit(false);
+            });
         });
     };
 
     function higherScore(a, b) {
         return a.antiSocialScore <= b.antiSocialScore;
     };
+
+    const updateUserInfo = async () => {
+        let moviesToPost = undefined;
+        let moviesToDelete = undefined;
+        if (moviesInput.length && userMovies.length) {
+            moviesToPost = moviesInput.filter(x => !userMovies.includes(x));
+            moviesToDelete = userMovies.filter(x => !moviesInput.includes(x));
+        } else if (!moviesInput.length) {
+            moviesToDelete = userMovies;
+        } else if (!userMovies.length) {
+            moviesToPost = moviesInput;
+        }
+        if (moviesToPost !== undefined) {
+            for (const movie of moviesToPost) {
+                await api.post("/UserMovie/" + currentUser + "/" + movie);
+                await api.put("/User/AddUserMovies/" + currentUser + "/" + movie);
+                await api.put("/Movie/AddUserMovies/" + currentUser + "/" + movie);
+            }
+        }
+        if (moviesToDelete !== undefined) {
+            for (const movie of moviesToDelete) {
+                await api.delete("/UserMovie/" + currentUser + "/" + movie);
+                await api.put("/User/DeleteUserMovies/" + currentUser + "/" + movie);
+                await api.put("/Movie/DeleteUserMovies/" + currentUser + "/" + movie);
+            }
+        }
+
+        let tvShowsToPost = undefined;
+        let tvShowsToDelete = undefined;
+        if (tvShowsInput.length && userTVShows.length) {
+            tvShowsToPost = tvShowsInput.filter(x => !userTVShows.includes(x));
+            tvShowsToDelete = userTVShows.filter(x => !tvShowsInput.includes(x));
+        } else if (!tvShowsInput.length) {
+            tvShowsToDelete = userTVShows;
+        } else if (!userTVShows.length) {
+            tvShowsToPost = tvShowsInput;
+        }
+        if (tvShowsToPost !== undefined) {
+            for (const tvShow of tvShowsToPost) {
+                await api.post("/UserTVShow/" + currentUser + "/" + tvShow);
+                await api.put("/User/AddUserTVShows/" + currentUser + "/" + tvShow);
+                await api.put("/TVShow/AddUserTVShows/" + currentUser + "/" + tvShow);
+            }
+        }
+        if (tvShowsToDelete !== undefined) {
+            for (const tvShow of tvShowsToDelete) {
+                await api.delete("/UserTVShow/" + currentUser + "/" + tvShow);
+                await api.put("/User/DeleteUserTVShows/" + currentUser + "/" + tvShow);
+                await api.put("/TVShow/DeleteUserTVShows/" + currentUser + "/" + tvShow);
+            }
+        }
+
+        let videoGamesToPost = [];
+        let videoGamesToDelete = [];
+        if (videoGamesInput.length && userVideoGames.length) {
+            videoGamesToPost = videoGamesInput.filter(x => !userVideoGames.includes(x));
+            videoGamesToDelete = userVideoGames.filter(x => !videoGamesInput.includes(x));
+        } else if (!videoGamesInput.length) {
+            videoGamesToDelete = userVideoGames;
+        } else if (!userVideoGames.length) {
+            videoGamesToPost = videoGamesInput;
+        }
+        if (videoGamesToPost !== undefined) {
+            for (const videoGame of videoGamesToPost) {
+                await api.post("/UserVideoGame/" + currentUser + "/" + videoGame);
+                await api.put("/User/AddUserVideoGames/" + currentUser + "/" + videoGame);
+                await api.put("/VideoGame/AddUserVideoGames/" + currentUser + "/" + videoGame);
+            }
+        }
+        if (videoGamesToDelete !== undefined) {
+            for (const videoGame of videoGamesToDelete) {
+                await api.delete("/UserVideoGame/" + currentUser + "/" + videoGame);
+                await api.put("/User/DeleteUserVideoGames/" + currentUser + "/" + videoGame);
+                await api.put("/VideoGame/DeleteUserVideoGames/" + currentUser + "/" + videoGame);
+            }
+        }
+    }
+
 
     const setMoviesTVShowsAndVideoGames = async () => {
         try {
@@ -181,7 +187,13 @@ const Home = () => {
             }
             setUserMovies(movieTitles);
             setUserTVShows(tvShowTitles);
-            setUserVideoGames(userVideoGames);
+            setUserVideoGames(videoGameTitles);
+            if (initializeInput) {
+                setMoviesInput(movieTitles);
+                setTVShowsInput(tvShowTitles);
+                setVideoGamesInput(videoGameTitles);
+                setInitializeInput(false);
+            }
             setLoadingUserEditList(false);
         } catch (e) {
             console.log(e);
@@ -396,98 +408,104 @@ const Home = () => {
                             {loadingEditList && loadingUserEditList ? (
                                 <Typography>Loading edit lists...</Typography>
                             ) : (
-                                <Container sx={{ py: 8 }} maxWidth="md">
-                                    <Autocomplete
-                                        sx={{ m: 1, width: 500 }}
-                                        multiple
-                                        options={movies}
-                                        getOptionLabel={(option) => option}
-                                        disableCloseOnSelect
-                                        defaultValue = {userMovies}
-                                        onChange={(event, newInputValue) => {
-                                            setMoviesInput(newInputValue);
-                                        }}
-                                        renderInput={(params) => (
-                                            <TextField
-                                                {...params}
-                                                variant="outlined"
-                                                label="Add Movies"
-                                                placeholder="Search Movies"
-                                            />
-                                        )}
-                                        renderOption={(props, option, { selected }) => (
-                                            <MenuItem
-                                                {...props}
-                                                key={option}
-                                                value={option}
-                                                sx={{ justifyContent: "space-between" }}
-                                            >
-                                                {option}
-                                                {selected ? <CheckIcon color="info" /> : null}
-                                            </MenuItem>
-                                        )}
-                                    />
-                                    <Autocomplete
-                                        sx={{ m: 1, width: 500 }}
-                                        multiple
-                                        options={tvShows}
-                                        getOptionLabel={(option) => option}
-                                        disableCloseOnSelect
-                                        value={userTVShows}
-                                        onChange={(event, newInputValue) => {
-                                            setTVShowsInput(newInputValue);
-                                        }}
-                                        renderInput={(params) => (
-                                            <TextField
-                                                {...params}
-                                                variant="outlined"
-                                                label="Add TV Shows"
-                                                placeholder="Search TV Shows"
-                                            />
-                                        )}
-                                        renderOption={(props, option, { selected }) => (
-                                            <MenuItem
-                                                {...props}
-                                                key={option}
-                                                value={option}
-                                                sx={{ justifyContent: "space-between" }}
-                                            >
-                                                {option}
-                                                {selected ? <CheckIcon color="info" /> : null}
-                                            </MenuItem>
-                                        )}
-                                    />
-                                    <Autocomplete
-                                        sx={{ m: 1, width: 500 }}
-                                        multiple
-                                        options={videoGames}
-                                        getOptionLabel={(option) => option}
-                                        disableCloseOnSelect
-                                        value={userVideoGames}
-                                        onChange={(event, newInputValue) => {
-                                            setVideoGamesInput(newInputValue);
-                                        }}
-                                        renderInput={(params) => (
-                                            <TextField
-                                                {...params}
-                                                variant="outlined"
-                                                label="Add Video Games"
-                                                placeholder="Search Video Games"
-                                            />
-                                        )}
-                                        renderOption={(props, option, { selected }) => (
-                                            <MenuItem
-                                                {...props}
-                                                key={option}
-                                                value={option}
-                                                sx={{ justifyContent: "space-between" }}
-                                            >
-                                                {option}
-                                                {selected ? <CheckIcon color="info" /> : null}
-                                            </MenuItem>
-                                        )}
-                                    />
-                                </Container>
+                                <Box>
+                                    <Container sx={{ py: 8 }} maxWidth="md">
+                                        <Autocomplete
+                                            sx={{ m: 1, width: 500 }}
+                                            multiple
+                                            options={movies}
+                                            getOptionLabel={(option) => option}
+                                            disableCloseOnSelect
+                                            defaultValue = {userMovies}
+                                            onChange={(event, newInputValue) => {
+                                                setMoviesInput(newInputValue);
+                                            }}
+                                            renderInput={(params) => (
+                                                <TextField
+                                                    {...params}
+                                                    variant="outlined"
+                                                    label="Add Movies"
+                                                    placeholder="Search Movies"
+                                                />
+                                            )}
+                                            renderOption={(props, option, { selected }) => (
+                                                <MenuItem
+                                                    {...props}
+                                                    key={option}
+                                                    value={option}
+                                                    sx={{ justifyContent: "space-between" }}
+                                                >
+                                                    {option}
+                                                    {selected ? <CheckIcon color="info" /> : null}
+                                                </MenuItem>
+                                            )}
+                                        />
+                                    </Container>
+                                    <Container sx={{ py: 8 }} maxWidth="md">
+                                        <Autocomplete
+                                            sx={{ m: 1, width: 500 }}
+                                            multiple
+                                            options={tvShows}
+                                            getOptionLabel={(option) => option}
+                                            disableCloseOnSelect
+                                            defaultValue={userTVShows}
+                                            onChange={(event, newInputValue) => {
+                                                setTVShowsInput(newInputValue);
+                                            }}
+                                            renderInput={(params) => (
+                                                <TextField
+                                                    {...params}
+                                                    variant="outlined"
+                                                    label="Add TV Shows"
+                                                    placeholder="Search TV Shows"
+                                                />
+                                            )}
+                                            renderOption={(props, option, { selected }) => (
+                                                <MenuItem
+                                                    {...props}
+                                                    key={option}
+                                                    value={option}
+                                                    sx={{ justifyContent: "space-between" }}
+                                                >
+                                                    {option}
+                                                    {selected ? <CheckIcon color="info" /> : null}
+                                                </MenuItem>
+                                            )}
+                                        />
+                                    </Container>
+                                    <Container sx={{ py: 8 }} maxWidth="md">
+                                        <Autocomplete
+                                            sx={{ m: 1, width: 500 }}
+                                            multiple
+                                            options={videoGames}
+                                            getOptionLabel={(option) => option}
+                                            disableCloseOnSelect
+                                            defaultValue={userVideoGames}
+                                            onChange={(event, newInputValue) => {
+                                                setVideoGamesInput(newInputValue);
+                                            }}
+                                            renderInput={(params) => (
+                                                <TextField
+                                                    {...params}
+                                                    variant="outlined"
+                                                    label="Add Video Games"
+                                                    placeholder="Search Video Games"
+                                                />
+                                            )}
+                                            renderOption={(props, option, { selected }) => (
+                                                <MenuItem
+                                                    {...props}
+                                                    key={option}
+                                                    value={option}
+                                                    sx={{ justifyContent: "space-between" }}
+                                                >
+                                                    {option}
+                                                    {selected ? <CheckIcon color="info" /> : null}
+                                                </MenuItem>
+                                            )}
+                                        />
+                                    </Container>
+                                </Box>
                             )}
                         </Box>
                     )}

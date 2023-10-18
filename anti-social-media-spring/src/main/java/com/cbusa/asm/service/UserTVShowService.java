@@ -26,7 +26,7 @@ public class UserTVShowService {
     }
 
     public Optional<UserTVShow> findUserTVShowByUserIdAndTVShowId(Integer userId, Integer tvShowId) {
-        return userTVShowRepository.findByUserIdAndTVShowId(userId, tvShowId);
+        return userTVShowRepository.findByUserIdAndTvShowId(userId, tvShowId);
     }
 
     public void addUserTVShow(UserTVShow userTVShow) {

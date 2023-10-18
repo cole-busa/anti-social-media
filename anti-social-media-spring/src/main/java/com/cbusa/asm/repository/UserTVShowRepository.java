@@ -11,5 +11,5 @@ import com.cbusa.asm.domain.UserTVShow;
 @Repository
 public interface UserTVShowRepository extends JpaRepository<UserTVShow, Integer>{
     List<UserTVShow> findByUserId(Integer userId);
-    Optional<UserTVShow> findByUserIdAndTVShowId(Integer userId, Integer tvShowId);
+    Optional<UserTVShow> findByUserIdAndTvShowId(Integer userId, Integer tvShowId);
 }
