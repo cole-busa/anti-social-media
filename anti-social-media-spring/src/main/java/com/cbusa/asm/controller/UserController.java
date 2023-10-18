@@ -56,6 +56,16 @@ public class UserController {
 		return userService.findUserById(id).get();
 	}
 
+	@PutMapping("/Score/{username}/{antiSocialScore}")
+	public void setAntiSocialScore(@PathVariable String username, @PathVariable Integer antiSocialScore) {
+		Optional<User> optionalUser = userService.findUserByName(username);
+		if (optionalUser.isPresent()) {
+			User user = optionalUser.get();
+			user.setAntiSocialScore(antiSocialScore);
+			userService.updateUser(user);
+		}
+	}
+
 	@PutMapping("/Friends/{username}/{newFriend}")
 	public void addFriend(@PathVariable String username, @PathVariable String newFriend) {
 		Optional<User> optionalUser = userService.findUserByName(username);

@@ -2,13 +2,13 @@ import React, { useContext, useEffect, useState } from 'react';
 
 import api from '../../api/axiosConfig';
 import { useNavigate } from 'react-router-dom';
-import { AppBar, Box, Button, Card, CardActions, CardContent, CardMedia, Container, CssBaseline, Drawer, Grid, Stack, ThemeProvider, Toolbar, Typography, createTheme } from '@mui/material';
+import { AppBar, Autocomplete, Box, Button, Container, CssBaseline, Drawer, MenuItem, Stack, TextField, ThemeProvider, Toolbar, Typography, createTheme } from '@mui/material';
+import CheckIcon from "@mui/icons-material/Check";
 
 const Home = () => {
     const navigate = useNavigate();
     const currentUser = localStorage.getItem('currentUser');
     const defaultTheme = createTheme();
-    const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
     const [users, setUsers] = useState();
     const [allUsers, setAllUsers] = useState();
@@ -18,6 +18,11 @@ const Home = () => {
     const [loadingFriends, setLoadingFriends] = useState(true);
     const [noFriends, setNoFriends] = useState(false);
     const [allUsersAdded, setAllUsersAdded] = useState(false);
+    const [movies, setMovies] = useState();
+    const [videoGames, setVideoGames] = useState();
+    const [tvShows, setTVShows] = useState();
+    const [edit, setEdit] = useState(false);
+    const [loadingEditList, setLoadingEditList] = useState(true);
     
     const handleSendFriendRequest = (friendName) => {
         api.post("/Friend/" + currentUser + "/" + friendName);
@@ -25,16 +30,51 @@ const Home = () => {
         setCurrentUsersAndFriends().then(() => {
             window.location.reload();
         });
-    }
+    };
 
     const handleViewProfile = (friendName) => {
         localStorage.setItem('currentProfile', friendName);
         navigate("/profile");
+    };
+
+    const handleEdit = () => {
+        console.log("hello");
+        setEdit(true);
+    }
+
+    const handleSave = () => {
+        setEdit(false);
     }
 
     function higherScore(a, b) {
         return a.antiSocialScore <= b.antiSocialScore;
-    }
+    };
+
+    const setMoviesTVShowsAndVideoGames = async () => {
+        try {
+            const movieResponse = await api.get("/Movie/");
+            const tvShowResponse = await api.get("/TVShow/");
+            const videoGameResponse = await api.get("/VideoGame/");
+            const movieTitles = [];
+            const tvShowTitles = [];
+            const videoGameTitles = [];
+            for (const movie of movieResponse.data) {
+                movieTitles.push(movie.title);
+            }
+            for (const tvShow of tvShowResponse.data) {
+                tvShowTitles.push(tvShow.title);
+            }
+            for (const videoGame of videoGameResponse.data) {
+                videoGameTitles.push(videoGame.title);
+            }
+            setMovies(movieTitles);
+            setTVShows(tvShowTitles);
+            setVideoGames(videoGameTitles);
+            setLoadingEditList(false);
+        } catch (e) {
+            console.log(e);
+        }
+    };
 
     const setCurrentUsersAndFriends = async () => {
         try {
@@ -83,6 +123,7 @@ const Home = () => {
 
     useEffect(() => {
         setCurrentUsersAndFriends();
+        setMoviesTVShowsAndVideoGames();
     }, []);
 
     return (
@@ -222,40 +263,109 @@ const Home = () => {
                         >
                         </Stack>
                     </Container>
+                    
                 </Box>
-                <Container sx={{ py: 8 }} maxWidth="md">
-                    <Grid container spacing={4}>
-                        {cards.map((card) => (
-                            <Grid item key={card} xs={12} sm={6} md={4}>
-                                <Card
-                                    sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
-                                >
-                                    <CardMedia
-                                        component="div"
-                                        sx={{
-                                            // 16:9
-                                            pt: '56.25%',
-                                        }}
-                                        image="https://source.unsplash.com/random?wallpapers"
+                <Box>
+                    {!edit ? (
+                        <Box textAlign='center'>
+                            <Button align="center" variant="contained" onClick={() => handleEdit()}>
+                                Edit Profile
+                            </Button>
+                        </Box>
+                    ) : (
+                        <Box>
+                            <Box textAlign='center'>
+                                <Button align="center" variant="contained" onClick={() => handleSave()}>
+                                    Save Profile
+                                </Button>
+                            </Box>
+                            {loadingEditList ? (
+                                <Typography>Loading edit lists...</Typography>
+                            ) : (
+                                <Container sx={{ py: 8 }} maxWidth="md">
+                                    <Autocomplete
+                                        sx={{ m: 1, width: 500 }}
+                                        multiple
+                                        options={movies}
+                                        getOptionLabel={(option) => option}
+                                        disableCloseOnSelect
+                                        renderInput={(params) => (
+                                            <TextField
+                                                {...params}
+                                                variant="outlined"
+                                                label="Add Movies"
+                                                placeholder="Search Movies"
+                                            />
+                                        )}
+                                        renderOption={(props, option, { selected }) => (
+                                            <MenuItem
+                                                {...props}
+                                                key={option}
+                                                value={option}
+                                                sx={{ justifyContent: "space-between" }}
+                                            >
+                                                {option}
+                                                {selected ? <CheckIcon color="info" /> : null}
+                                            </MenuItem>
+                                        )}
                                     />
-                                    <CardContent sx={{ flexGrow: 1 }}>
-                                        <Typography gutterBottom variant="h5" component="h2">
-                                            Heading
-                                        </Typography>
-                                        <Typography>
-                                            This is a media card. You can use this section to describe the
-                                            content.
-                                        </Typography>
-                                    </CardContent>
-                                    <CardActions>
-                                        <Button size="small">View</Button>
-                                        <Button size="small">Edit</Button>
-                                    </CardActions>
-                                </Card>
-                            </Grid>
-                        ))}
-                    </Grid>
-                </Container>
+                                    <Autocomplete
+                                        sx={{ m: 1, width: 500 }}
+                                        multiple
+                                        options={tvShows}
+                                        getOptionLabel={(option) => option}
+                                        disableCloseOnSelect
+                                        renderInput={(params) => (
+                                            <TextField
+                                                {...params}
+                                                variant="outlined"
+                                                label="Add TV Shows"
+                                                placeholder="Search TV Shows"
+                                            />
+                                        )}
+                                        renderOption={(props, option, { selected }) => (
+                                            <MenuItem
+                                                {...props}
+                                                key={option}
+                                                value={option}
+                                                sx={{ justifyContent: "space-between" }}
+                                            >
+                                                {option}
+                                                {selected ? <CheckIcon color="info" /> : null}
+                                            </MenuItem>
+                                        )}
+                                    />
+                                    <Autocomplete
+                                        sx={{ m: 1, width: 500 }}
+                                        multiple
+                                        options={videoGames}
+                                        getOptionLabel={(option) => option}
+                                        disableCloseOnSelect
+                                        renderInput={(params) => (
+                                            <TextField
+                                                {...params}
+                                                variant="outlined"
+                                                label="Add Video Games"
+                                                placeholder="Search Video Games"
+                                            />
+                                        )}
+                                        renderOption={(props, option, { selected }) => (
+                                            <MenuItem
+                                                {...props}
+                                                key={option}
+                                                value={option}
+                                                sx={{ justifyContent: "space-between" }}
+                                            >
+                                                {option}
+                                                {selected ? <CheckIcon color="info" /> : null}
+                                            </MenuItem>
+                                        )}
+                                    />
+                                </Container>
+                            )}
+                        </Box>
+                    )}
+                </Box>
             </main>
         </ThemeProvider>
     );
