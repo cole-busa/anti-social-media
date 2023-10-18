@@ -22,6 +22,10 @@ const Home = () => {
     const [videoGames, setVideoGames] = useState();
     const [tvShows, setTVShows] = useState();
     const [edit, setEdit] = useState(false);
+    const [moviesInput, setMoviesInput] = useState();
+    const [userMovies, setUserMovies] = useState();
+    const [userTVShows, setUserTVShows] = useState();
+    const [userVideoGames, setUserVideoGames] = useState();
     const [loadingEditList, setLoadingEditList] = useState(true);
     
     const handleSendFriendRequest = (friendName) => {
@@ -38,7 +42,6 @@ const Home = () => {
     };
 
     const handleEdit = () => {
-        console.log("hello");
         setEdit(true);
     }
 
@@ -75,6 +78,33 @@ const Home = () => {
             console.log(e);
         }
     };
+
+    const setUserMoviesTVShowsAndVideoGames = async () => {
+        try {
+            const userResponse = await api.get("/User/Name/" + currentUser);
+            const currentUserId = userResponse.data.id;
+            console.log(currentUserId);
+            const movieResponse = await api.get("/UserMovie/Id/" + currentUserId);
+            const tvShowResponse = await api.get("/UserTVShow/Id/" + currentUserId);
+            const videoGameResponse = await api.get("/UserVideoGame/Id/" + currentUserId);
+            const movieTitles = [];
+            const tvShowTitles = [];
+            const videoGameTitles = [];
+            console.log(movieResponse.data);
+            for (const movie of movieResponse.data) {
+                movieTitles.push(movie.title);
+            }
+            for (const tvShow of tvShowResponse.data) {
+                tvShowTitles.push(tvShow.title);
+            }
+            for (const videoGame of videoGameResponse.data) {
+                videoGameTitles.push(videoGame.title);
+            }
+            
+        } catch (e) {
+            console.log(e);
+        }
+    }
 
     const setCurrentUsersAndFriends = async () => {
         try {
@@ -123,7 +153,9 @@ const Home = () => {
 
     useEffect(() => {
         setCurrentUsersAndFriends();
-        setMoviesTVShowsAndVideoGames();
+        setMoviesTVShowsAndVideoGames().then(() => {
+            setUserMoviesTVShowsAndVideoGames();
+        });
     }, []);
 
     return (
@@ -289,6 +321,10 @@ const Home = () => {
                                         options={movies}
                                         getOptionLabel={(option) => option}
                                         disableCloseOnSelect
+                                        value = {userMovies}
+                                        onChange={(event, newInputValue) => {
+                                            setMoviesInput(newInputValue);
+                                        }}
                                         renderInput={(params) => (
                                             <TextField
                                                 {...params}
