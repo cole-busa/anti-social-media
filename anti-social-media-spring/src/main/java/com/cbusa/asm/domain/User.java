@@ -123,6 +123,10 @@ public class User {
         userMovies.add(userMovie);
     }
 
+    public void removeUserMovie(UserMovie userMovie) {
+        userMovies.remove(userMovie);
+    }
+
     public List<UserTVShow> getUserTVShows() {
         return this.userTVShows;
     }
@@ -135,6 +139,10 @@ public class User {
         userTVShows.add(userTVShow);
     }
 
+    public void removeUserTVShow(UserTVShow userTVShow) {
+        userTVShows.remove(userTVShow);
+    }
+
     public List<UserVideoGame> getUserVideoGames() {
         return this.userVideoGames;
     }
@@ -145,5 +153,9 @@ public class User {
 
     public void addUserVideoGame(UserVideoGame userVideoGame) {
         userVideoGames.add(userVideoGame);
+    }
+
+    public void removeUserVideoGame(UserVideoGame userVideoGame) {
+        userVideoGames.remove(userVideoGame);
     }
 }

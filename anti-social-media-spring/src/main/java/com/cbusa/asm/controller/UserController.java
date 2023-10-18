@@ -77,7 +77,7 @@ public class UserController {
 		}
 	}
 
-	@PutMapping("/UserMovies/{username}/{title}")
+	@PutMapping("/AddUserMovies/{username}/{title}")
 	public void addUserMovie(@PathVariable String username, @PathVariable String title) {
 		Optional<User> optionalUser = userService.findUserByName(username);
 		Optional<Movie> optionalMovie = movieService.findMovieByTitle(title);
@@ -89,7 +89,19 @@ public class UserController {
 		}
 	}
 
-	@PutMapping("/UserVideoGames/{username}/{title}")
+	@PutMapping("/DeleteUserMovies/{username}/{title}")
+	public void deleteUserMovie(@PathVariable String username, @PathVariable String title) {
+		Optional<User> optionalUser = userService.findUserByName(username);
+		Optional<Movie> optionalMovie = movieService.findMovieByTitle(title);
+		if (optionalUser.isPresent() && optionalMovie.isPresent()) {
+			User user = optionalUser.get();
+			Movie movie = optionalMovie.get();
+			UserMovie userMovie = new UserMovie(user, movie);
+			user.removeUserMovie(userMovie);
+		}
+	}
+
+	@PutMapping("/AddUserVideoGames/{username}/{title}")
 	public void addUserVideoGame(@PathVariable String username, @PathVariable String title) {
 		Optional<User> optionalUser = userService.findUserByName(username);
 		Optional<VideoGame> optionalVideoGame = videoGameService.findVideoGameByTitle(title);
@@ -101,7 +113,19 @@ public class UserController {
 		}
 	}
 
-	@PutMapping("/UserTVShows/{username}/{title}")
+	@PutMapping("/DeleteUserVideoGames/{username}/{title}")
+	public void deleteUserVideoGame(@PathVariable String username, @PathVariable String title) {
+		Optional<User> optionalUser = userService.findUserByName(username);
+		Optional<VideoGame> optionalVideoGame = videoGameService.findVideoGameByTitle(title);
+		if (optionalUser.isPresent() && optionalVideoGame.isPresent()) {
+			User user = optionalUser.get();
+			VideoGame videoGame = optionalVideoGame.get();
+			UserVideoGame userVideoGame = new UserVideoGame(user, videoGame);
+			user.removeUserVideoGame(userVideoGame);
+		}
+	}
+
+	@PutMapping("/AddUserTVShows/{username}/{title}")
 	public void addUserTVShow(@PathVariable String username, @PathVariable String title) {
 		Optional<User> optionalUser = userService.findUserByName(username);
 		Optional<TVShow> optionalTVShow = tvShowService.findTVShowByTitle(title);
@@ -110,6 +134,18 @@ public class UserController {
 			TVShow tvShow = optionalTVShow.get();
 			UserTVShow userTVShow = new UserTVShow(user, tvShow);
 			user.addUserTVShow(userTVShow);
+		}
+	}
+
+	@PutMapping("/DeleteUserTVShows/{username}/{title}")
+	public void deleteUserTVShow(@PathVariable String username, @PathVariable String title) {
+		Optional<User> optionalUser = userService.findUserByName(username);
+		Optional<TVShow> optionalTVShow = tvShowService.findTVShowByTitle(title);
+		if (optionalUser.isPresent() && optionalTVShow.isPresent()) {
+			User user = optionalUser.get();
+			TVShow tvShow = optionalTVShow.get();
+			UserTVShow userTVShow = new UserTVShow(user, tvShow);
+			user.removeUserTVShow(userTVShow);
 		}
 	}
 

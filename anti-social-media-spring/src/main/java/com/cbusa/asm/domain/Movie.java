@@ -76,4 +76,8 @@ public class Movie {
     public void addUserMovie(UserMovie userMovie) {
         userMovies.add(userMovie);
     }
+
+    public void removeUserMovie(UserMovie userMovie) {
+        userMovies.remove(userMovie);
+    }
 }

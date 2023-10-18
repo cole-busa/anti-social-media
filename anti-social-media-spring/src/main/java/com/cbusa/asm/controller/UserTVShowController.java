@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -58,6 +59,21 @@ public class UserTVShowController {
 			if (!match) {
 				UserTVShow userTVShow = new UserTVShow(user, tvShow);
 				userTVShowService.addUserTVShow(userTVShow);
+			}
+		}
+    }
+
+	@DeleteMapping("{username}/{title}")
+    public void deleteUserTVShow(@PathVariable String username, @PathVariable String title) {
+        Optional<User> optionalUser = userService.findUserByName(username);
+		Optional<TVShow> optionalTVShow = tvShowService.findTVShowByTitle(title);
+		if (optionalUser.isPresent() && optionalTVShow.isPresent()) {
+			User user = optionalUser.get();
+			TVShow tvShow = optionalTVShow.get();
+			Optional<UserTVShow> optionalUserTVShow = userTVShowService.findUserTVShowByUserIdAndTVShowId(user.getId(), tvShow.getId());
+			if (optionalUserTVShow.isPresent()) {
+				UserTVShow userTVShow = optionalUserTVShow.get();
+				userTVShowService.deleteUserTVShow(userTVShow);
 			}
 		}
     }

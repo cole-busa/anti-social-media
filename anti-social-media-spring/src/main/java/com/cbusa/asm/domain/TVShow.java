@@ -76,4 +76,8 @@ public class TVShow {
     public void addUserTVShow(UserTVShow userTVShow) {
         userTVShows.add(userTVShow);
     }
+
+    public void removeUserTVShow(UserTVShow userTVShow) {
+        userTVShows.remove(userTVShow);
+    }
 }

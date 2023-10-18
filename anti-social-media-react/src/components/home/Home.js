@@ -29,6 +29,7 @@ const Home = () => {
     const [userTVShows, setUserTVShows] = useState();
     const [userVideoGames, setUserVideoGames] = useState();
     const [loadingEditList, setLoadingEditList] = useState(true);
+    const [loadingUserEditList, setLoadingUserEditList] = useState(true);
     
     const handleSendFriendRequest = (friendName) => {
         api.post("/Friend/" + currentUser + "/" + friendName);
@@ -48,47 +49,85 @@ const Home = () => {
     }
 
     const handleSave = () => {
-        const moviesToPost = moviesInput.filter(x => !userMovies.includes(x));
-        const moviesToDelete = userMovies.filter(x => !moviesInput.includes(x));
-        for (const movie of moviesToPost) {
-            api.post("/UserMovie/" + currentUser + "/" + movie);
-            api.put("/User/AddUserMovies/" + currentUser + "/" + movie);
-            api.put("/Movie/AddUserMovies/" + currentUser + "/" + movie);
+        let moviesToPost = undefined;
+        let moviesToDelete = undefined;
+        if (moviesInput !== undefined && userMovies !== undefined) {
+            moviesToPost = moviesInput.filter(x => !userMovies.includes(x));
+            moviesToDelete = userMovies.filter(x => !moviesInput.includes(x));
+        } else if (moviesInput === undefined) {
+            moviesToDelete = userMovies;
+        } else if (userMovies === undefined) {
+            moviesToPost = moviesInput;
         }
-        for (const movie of moviesToDelete) {
-            api.delete("/UserMovie/" + currentUser + "/" + movie);
-            api.put("/User/DeleteUserMovies/" + currentUser + "/" + movie);
-            api.put("/Movie/DeleteUserMovies/" + currentUser + "/" + movie);
+        if (moviesToPost !== undefined) {
+            for (const movie of moviesToPost) {
+                api.post("/UserMovie/" + currentUser + "/" + movie);
+                api.put("/User/AddUserMovies/" + currentUser + "/" + movie);
+                api.put("/Movie/AddUserMovies/" + currentUser + "/" + movie);
+            }
         }
-
-        const tvShowsToPost = tvShowsInput.filter(x => !userTVShows.includes(x));
-        const tvShowsToDelete = userTVShows.filter(x => !tvShowsInput.includes(x));
-        for (const tvShow of tvShowsToPost) {
-            api.post("/UserTVShow/" + currentUser + "/" + tvShow);
-            api.put("/User/AddUserTVShows/" + currentUser + "/" + tvShow);
-            api.put("/TVShow/AddUserTVShows/" + currentUser + "/" + tvShow);
-        }
-        for (const tvShow of tvShowsToDelete) {
-            api.delete("/UserMovie/" + currentUser + "/" + tvShow);
-            api.put("/User/DeleteUserTVShows/" + currentUser + "/" + tvShow);
-            api.put("/TVShow/DeleteUserTVShows/" + currentUser + "/" + tvShow);
-        }
-
-        const videoGamesToPost = videoGamesInput.filter(x => !userVideoGames.includes(x));
-        const videoGamesToDelete = userVideoGames.filter(x => !videoGamesInput.includes(x));
-        for (const videoGame of videoGamesToPost) {
-            api.post("/UserVideoGame/" + currentUser + "/" + videoGame);
-            api.put("/User/AddUserVideoGames/" + currentUser + "/" + videoGame);
-            api.put("/VideoGame/AddUserVideoGames/" + currentUser + "/" + videoGame);
-        }
-        for (const videoGame of videoGamesToDelete) {
-            api.delete("/UserMovie/" + currentUser + "/" + videoGame);
-            api.put("/User/DeleteUserVideoGames/" + currentUser + "/" + videoGame);
-            api.put("/VideoGame/DeleteUserVideoGames/" + currentUser + "/" + videoGame);
+        if (moviesToDelete !== undefined) {
+            for (const movie of moviesToDelete) {
+                api.delete("/UserMovie/" + currentUser + "/" + movie);
+                api.put("/User/DeleteUserMovies/" + currentUser + "/" + movie);
+                api.put("/Movie/DeleteUserMovies/" + currentUser + "/" + movie);
+            }
         }
 
-        setEdit(false);
-    }
+        let tvShowsToPost = undefined;
+        let tvShowsToDelete = undefined;
+        if (tvShowsInput !== undefined && userTVShows !== undefined) {
+            tvShowsToPost = tvShowsInput.filter(x => !userTVShows.includes(x));
+            tvShowsToDelete = userTVShows.filter(x => !tvShowsInput.includes(x));
+        } else if (tvShowsInput === undefined) {
+            tvShowsToDelete = userTVShows;
+        } else if (userTVShows === undefined) {
+            tvShowsToPost = tvShowsInput;
+        }
+        if (tvShowsToPost !== undefined) {
+            for (const tvShow of tvShowsToPost) {
+                api.post("/UserTVShow/" + currentUser + "/" + tvShow);
+                api.put("/User/AddUserTVShows/" + currentUser + "/" + tvShow);
+                api.put("/TVShow/AddUserTVShows/" + currentUser + "/" + tvShow);
+            }
+        }
+        if (tvShowsToDelete !== undefined) {
+            for (const tvShow of tvShowsToDelete) {
+                api.delete("/UserMovie/" + currentUser + "/" + tvShow);
+                api.put("/User/DeleteUserTVShows/" + currentUser + "/" + tvShow);
+                api.put("/TVShow/DeleteUserTVShows/" + currentUser + "/" + tvShow);
+            }
+        }
+
+        let videoGamesToPost = undefined;
+        let videoGamesToDelete = undefined;
+        if (videoGamesInput !== undefined && userVideoGames !== undefined) {
+            videoGamesToPost = videoGamesInput.filter(x => !userVideoGames.includes(x));
+            videoGamesToDelete = userVideoGames.filter(x => !videoGamesInput.includes(x));
+        } else if (videoGamesInput === undefined) {
+            videoGamesToDelete = userVideoGames;
+        } else if (userVideoGames === undefined) {
+            videoGamesToPost = videoGamesInput;
+        }
+        if (videoGamesToPost !== undefined) {
+            for (const videoGame of videoGamesToPost) {
+                api.post("/UserVideoGame/" + currentUser + "/" + videoGame);
+                api.put("/User/AddUserVideoGames/" + currentUser + "/" + videoGame);
+                api.put("/VideoGame/AddUserVideoGames/" + currentUser + "/" + videoGame);
+            }
+        }
+        if (videoGamesToDelete !== undefined) {
+            for (const videoGame of videoGamesToDelete) {
+                api.delete("/UserMovie/" + currentUser + "/" + videoGame);
+                api.put("/User/DeleteUserVideoGames/" + currentUser + "/" + videoGame);
+                api.put("/VideoGame/DeleteUserVideoGames/" + currentUser + "/" + videoGame);
+            }
+        }
+
+        setUserMoviesTVShowsAndVideoGames().then(() => {
+            setEdit(false);
+        });
+    };
 
     function higherScore(a, b) {
         return a.antiSocialScore <= b.antiSocialScore;
@@ -138,11 +177,12 @@ const Home = () => {
                 tvShowTitles.push(userTVShow.tvShow.title);
             }
             for (const userVideoGame of videoGameResponse.data) {
-                videoGameTitles.push(userVideoGame.VideoGame.title);
+                videoGameTitles.push(userVideoGame.videoGame.title);
             }
             setUserMovies(movieTitles);
             setUserTVShows(tvShowTitles);
             setUserVideoGames(userVideoGames);
+            setLoadingUserEditList(false);
         } catch (e) {
             console.log(e);
         }
@@ -353,7 +393,7 @@ const Home = () => {
                                     Save Profile
                                 </Button>
                             </Box>
-                            {loadingEditList ? (
+                            {loadingEditList && loadingUserEditList ? (
                                 <Typography>Loading edit lists...</Typography>
                             ) : (
                                 <Container sx={{ py: 8 }} maxWidth="md">
@@ -363,7 +403,7 @@ const Home = () => {
                                         options={movies}
                                         getOptionLabel={(option) => option}
                                         disableCloseOnSelect
-                                        value = {userMovies}
+                                        defaultValue = {userMovies}
                                         onChange={(event, newInputValue) => {
                                             setMoviesInput(newInputValue);
                                         }}

@@ -74,4 +74,8 @@ public class VideoGame {
     public void addUserVideoGame(UserVideoGame userVideoGame) {
         userVideoGames.add(userVideoGame);
     }
+
+    public void removeUserVideoGame(UserVideoGame userVideoGame) {
+        userVideoGames.remove(userVideoGame);
+    }
 }

@@ -1,6 +1,7 @@
 package com.cbusa.asm.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,10 @@ public class UserMovieService {
         return userMovieRepository.findByUserId(id);
     }
 
+    public Optional<UserMovie> findUserMovieByUserIdAndMovieId(Integer userId, Integer movieId) {
+        return userMovieRepository.findByUserIdAndMovieId(userId, movieId);
+    }
+
     public void addUserMovie(UserMovie userMovie) {
 		userMovieRepository.save(userMovie);
 	}
@@ -31,4 +36,8 @@ public class UserMovieService {
 	public void updateUserMovie(UserMovie userMovie) {
 		userMovieRepository.save(userMovie);
 	}
+
+    public void deleteUserMovie(UserMovie userMovie) {
+        userMovieRepository.delete(userMovie);
+    }
 }

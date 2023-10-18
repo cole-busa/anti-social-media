@@ -1,6 +1,7 @@
 package com.cbusa.asm.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,11 +25,19 @@ public class UserTVShowService {
         return userTVShowRepository.findByUserId(id);
     }
 
+    public Optional<UserTVShow> findUserTVShowByUserIdAndTVShowId(Integer userId, Integer tvShowId) {
+        return userTVShowRepository.findByUserIdAndTVShowId(userId, tvShowId);
+    }
+
     public void addUserTVShow(UserTVShow userTVShow) {
 		userTVShowRepository.save(userTVShow);
 	}
 
 	public void updateUserTVShow(UserTVShow userTVShow) {
 		userTVShowRepository.save(userTVShow);
+	}
+
+    public void deleteUserTVShow(UserTVShow userTVShow) {
+		userTVShowRepository.delete(userTVShow);
 	}
 }

@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -58,6 +59,21 @@ public class UserMovieController {
 			if (!match) {
 				UserMovie userMovie = new UserMovie(user, movie);
 				userMovieService.addUserMovie(userMovie);
+			}
+		}
+    }
+
+	@DeleteMapping("{username}/{title}")
+    public void deleteUserMovie(@PathVariable String username, @PathVariable String title) {
+        Optional<User> optionalUser = userService.findUserByName(username);
+		Optional<Movie> optionalMovie = movieService.findMovieByTitle(title);
+		if (optionalUser.isPresent() && optionalMovie.isPresent()) {
+			User user = optionalUser.get();
+			Movie movie = optionalMovie.get();
+			Optional<UserMovie> optionalUserMovie = userMovieService.findUserMovieByUserIdAndMovieId(user.getId(), movie.getId());
+			if (optionalUserMovie.isPresent()) {
+				UserMovie userMovie = optionalUserMovie.get();
+				userMovieService.deleteUserMovie(userMovie);
 			}
 		}
     }

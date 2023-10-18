@@ -1,6 +1,7 @@
 package com.cbusa.asm.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,11 +25,19 @@ public class UserVideoGameService {
         return userVideoGameRepository.findByUserId(id);
     }
 
+    public Optional<UserVideoGame> findUserVideoGameByUserIdAndVideoGameId(Integer userId, Integer videoGameId) {
+        return userVideoGameRepository.findByUserIdAndVideoGameId(userId, videoGameId);
+    }
+
     public void addUserVideoGame(UserVideoGame userVideoGame) {
 		userVideoGameRepository.save(userVideoGame);
 	}
 
 	public void updateUserVideoGame(UserVideoGame userVideoGame) {
 		userVideoGameRepository.save(userVideoGame);
+	}
+
+    public void deleteUserVideoGame(UserVideoGame userVideoGame) {
+		userVideoGameRepository.delete(userVideoGame);
 	}
 }
