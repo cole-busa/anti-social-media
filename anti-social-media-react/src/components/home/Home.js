@@ -23,6 +23,8 @@ const Home = () => {
     const [tvShows, setTVShows] = useState();
     const [edit, setEdit] = useState(false);
     const [moviesInput, setMoviesInput] = useState();
+    const [tvShowsInput, setTVShowsInput] = useState();
+    const [videoGamesInput, setVideoGamesInput] = useState();
     const [userMovies, setUserMovies] = useState();
     const [userTVShows, setUserTVShows] = useState();
     const [userVideoGames, setUserVideoGames] = useState();
@@ -46,6 +48,45 @@ const Home = () => {
     }
 
     const handleSave = () => {
+        const moviesToPost = moviesInput.filter(x => !userMovies.includes(x));
+        const moviesToDelete = userMovies.filter(x => !moviesInput.includes(x));
+        for (const movie of moviesToPost) {
+            api.post("/UserMovie/" + currentUser + "/" + movie);
+            api.put("/User/AddUserMovies/" + currentUser + "/" + movie);
+            api.put("/Movie/AddUserMovies/" + currentUser + "/" + movie);
+        }
+        for (const movie of moviesToDelete) {
+            api.delete("/UserMovie/" + currentUser + "/" + movie);
+            api.put("/User/DeleteUserMovies/" + currentUser + "/" + movie);
+            api.put("/Movie/DeleteUserMovies/" + currentUser + "/" + movie);
+        }
+
+        const tvShowsToPost = tvShowsInput.filter(x => !userTVShows.includes(x));
+        const tvShowsToDelete = userTVShows.filter(x => !tvShowsInput.includes(x));
+        for (const tvShow of tvShowsToPost) {
+            api.post("/UserTVShow/" + currentUser + "/" + tvShow);
+            api.put("/User/AddUserTVShows/" + currentUser + "/" + tvShow);
+            api.put("/TVShow/AddUserTVShows/" + currentUser + "/" + tvShow);
+        }
+        for (const tvShow of tvShowsToDelete) {
+            api.delete("/UserMovie/" + currentUser + "/" + tvShow);
+            api.put("/User/DeleteUserTVShows/" + currentUser + "/" + tvShow);
+            api.put("/TVShow/DeleteUserTVShows/" + currentUser + "/" + tvShow);
+        }
+
+        const videoGamesToPost = videoGamesInput.filter(x => !userVideoGames.includes(x));
+        const videoGamesToDelete = userVideoGames.filter(x => !videoGamesInput.includes(x));
+        for (const videoGame of videoGamesToPost) {
+            api.post("/UserVideoGame/" + currentUser + "/" + videoGame);
+            api.put("/User/AddUserVideoGames/" + currentUser + "/" + videoGame);
+            api.put("/VideoGame/AddUserVideoGames/" + currentUser + "/" + videoGame);
+        }
+        for (const videoGame of videoGamesToDelete) {
+            api.delete("/UserMovie/" + currentUser + "/" + videoGame);
+            api.put("/User/DeleteUserVideoGames/" + currentUser + "/" + videoGame);
+            api.put("/VideoGame/DeleteUserVideoGames/" + currentUser + "/" + videoGame);
+        }
+
         setEdit(false);
     }
 
@@ -83,24 +124,25 @@ const Home = () => {
         try {
             const userResponse = await api.get("/User/Name/" + currentUser);
             const currentUserId = userResponse.data.id;
-            console.log(currentUserId);
+
             const movieResponse = await api.get("/UserMovie/Id/" + currentUserId);
             const tvShowResponse = await api.get("/UserTVShow/Id/" + currentUserId);
             const videoGameResponse = await api.get("/UserVideoGame/Id/" + currentUserId);
             const movieTitles = [];
             const tvShowTitles = [];
             const videoGameTitles = [];
-            console.log(movieResponse.data);
-            for (const movie of movieResponse.data) {
-                movieTitles.push(movie.title);
+            for (const userMovie of movieResponse.data) {
+                movieTitles.push(userMovie.movie.title);
             }
-            for (const tvShow of tvShowResponse.data) {
-                tvShowTitles.push(tvShow.title);
+            for (const userTVShow of tvShowResponse.data) {
+                tvShowTitles.push(userTVShow.tvShow.title);
             }
-            for (const videoGame of videoGameResponse.data) {
-                videoGameTitles.push(videoGame.title);
+            for (const userVideoGame of videoGameResponse.data) {
+                videoGameTitles.push(userVideoGame.VideoGame.title);
             }
-            
+            setUserMovies(movieTitles);
+            setUserTVShows(tvShowTitles);
+            setUserVideoGames(userVideoGames);
         } catch (e) {
             console.log(e);
         }
@@ -351,6 +393,10 @@ const Home = () => {
                                         options={tvShows}
                                         getOptionLabel={(option) => option}
                                         disableCloseOnSelect
+                                        value={userTVShows}
+                                        onChange={(event, newInputValue) => {
+                                            setTVShowsInput(newInputValue);
+                                        }}
                                         renderInput={(params) => (
                                             <TextField
                                                 {...params}
@@ -377,6 +423,10 @@ const Home = () => {
                                         options={videoGames}
                                         getOptionLabel={(option) => option}
                                         disableCloseOnSelect
+                                        value={userVideoGames}
+                                        onChange={(event, newInputValue) => {
+                                            setVideoGamesInput(newInputValue);
+                                        }}
                                         renderInput={(params) => (
                                             <TextField
                                                 {...params}

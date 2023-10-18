@@ -2,12 +2,14 @@ package com.cbusa.asm.domain;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -23,7 +25,8 @@ public class VideoGame {
     @Column(name = "Playtime")
     private String playtime;
 
-    @OneToMany(mappedBy = "videoGame")
+    @ManyToMany(mappedBy = "videoGame")
+    @JsonBackReference
     private List<UserVideoGame> userVideoGames;
 
     public VideoGame() {

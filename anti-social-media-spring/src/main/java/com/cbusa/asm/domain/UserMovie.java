@@ -1,5 +1,7 @@
 package com.cbusa.asm.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -17,10 +19,12 @@ public class UserMovie {
     
     @ManyToOne
     @JoinColumn(name = "UserId")
+    @JsonManagedReference
     private User user;
 
     @ManyToOne
     @JoinColumn(name = "MovieId")
+    @JsonManagedReference
     private Movie movie;
 
     public UserMovie() {
