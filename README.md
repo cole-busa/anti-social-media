@@ -56,4 +56,4 @@ To start the React application, navigate to the anti-social-media-react folder a
 
 
 
-TODO: Display UserMovie, UserTVShow, and UserVideoGame lists on each users profile. Update the total anti-social score. Add login authentication to the login page.
+TODO: Update the total anti-social score. Add login authentication to the login page.

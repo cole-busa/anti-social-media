@@ -3,13 +3,12 @@ import React, { useEffect, useState } from 'react';
 import api from '../../api/axiosConfig';
 import { useNavigate } from 'react-router-dom';
 import PerfectScrollbar from "react-perfect-scrollbar";
-import { AppBar, Box, Button, Card, CardActions, CardContent, CardMedia, Container, CssBaseline, Drawer, Grid, Stack, ThemeProvider, Toolbar, Typography, createTheme } from '@mui/material';
+import { AppBar, Box, Button, Container, CssBaseline, Drawer,List, ListItem, ListSubheader, ThemeProvider, Toolbar, Typography, createTheme } from '@mui/material';
 
 const Profile = () => {
     const navigate = useNavigate();
     const currentUser = localStorage.getItem('currentUser');
     const defaultTheme = createTheme();
-    const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
     const [users, setUsers] = useState();
     const [allUsers, setAllUsers] = useState();
@@ -20,6 +19,10 @@ const Profile = () => {
     const [loadingFriends, setLoadingFriends] = useState(true);
     const [noFriends, setNoFriends] = useState(false);
     const [allUsersAdded, setAllUsersAdded] = useState(false);
+    const [userMovies, setUserMovies] = useState();
+    const [userTVShows, setUserTVShows] = useState();
+    const [userVideoGames, setUserVideoGames] = useState();
+    const [loadingUserEditList, setLoadingUserEditList] = useState(true);
 
     const handleReturnHome = () => {
         localStorage.setItem('currentProfile', currentUser);
@@ -91,8 +94,38 @@ const Profile = () => {
         }
     };
 
+    const setUserMoviesTVShowsAndVideoGames = async () => {
+        try {
+            const userResponse = await api.get("/User/Name/" + currentProfile);
+            const currentProfileId = userResponse.data.id;
+
+            const movieResponse = await api.get("/UserMovie/Id/" + currentProfileId);
+            const tvShowResponse = await api.get("/UserTVShow/Id/" + currentProfileId);
+            const videoGameResponse = await api.get("/UserVideoGame/Id/" + currentProfileId);
+            const movieTitles = [];
+            const tvShowTitles = [];
+            const videoGameTitles = [];
+            for (const userMovie of movieResponse.data) {
+                movieTitles.push(userMovie.movie.title);
+            }
+            for (const userTVShow of tvShowResponse.data) {
+                tvShowTitles.push(userTVShow.tvShow.title);
+            }
+            for (const userVideoGame of videoGameResponse.data) {
+                videoGameTitles.push(userVideoGame.videoGame.title);
+            }
+            setUserMovies(movieTitles);
+            setUserTVShows(tvShowTitles);
+            setUserVideoGames(videoGameTitles);
+            setLoadingUserEditList(false);
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
     useEffect(() => {
         setCurrentUsersAndFriends();
+        setUserMoviesTVShowsAndVideoGames();
     }, []);
 
     return (
@@ -227,48 +260,48 @@ const Profile = () => {
                             <Typography variant="h5" align="center" color="purple" fontWeight='bold' paragraph>
                                 Anti-Social Score: {antiSocialScore}
                             </Typography>
-                            <Stack
-                                sx={{ pt: 4 }}
-                                direction="row"
-                                spacing={2}
-                                justifyContent="center"
-                            >
-                            </Stack>
                         </Container>
                     </Box>
-                    <Container sx={{ py: 8 }} maxWidth="md">
-                        <Grid container spacing={4}>
-                            {cards.map((card) => (
-                                <Grid item key={card} xs={12} sm={6} md={4}>
-                                    <Card
-                                        sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
-                                    >
-                                        <CardMedia
-                                            component="div"
-                                            sx={{
-                                                // 16:9
-                                                pt: '56.25%',
-                                            }}
-                                            image="https://source.unsplash.com/random?wallpapers"
-                                        />
-                                        <CardContent sx={{ flexGrow: 1 }}>
-                                            <Typography gutterBottom variant="h5" component="h2">
-                                                Heading
-                                            </Typography>
-                                            <Typography>
-                                                This is a media card. You can use this section to describe the
-                                                content.
-                                            </Typography>
-                                        </CardContent>
-                                        <CardActions>
-                                            <Button size="small">View</Button>
-                                            <Button size="small">Edit</Button>
-                                        </CardActions>
-                                    </Card>
-                                </Grid>
-                            ))}
-                        </Grid>
-                    </Container>
+                    <Box>
+                        {loadingUserEditList ? (
+                            <Typography>Loading user info...</Typography>
+                        ) : (
+                            <Box>
+                                <Box style={{ display: 'flex', justifyContent: 'center' }}>
+                                    <List alignItems="center">
+                                        <Box textAlign="center">
+                                            <ListSubheader>Movies Watched</ListSubheader>
+                                        </Box>
+                                        {userMovies.map((item) => (
+                                            <ListItem alignItems="center" key={item} >
+                                                {item}
+                                            </ListItem>
+                                        ))}
+                                    </List>
+                                    <List alignItems="center">
+                                        <Box textAlign="center">
+                                            <ListSubheader>TV Shows Watched</ListSubheader>
+                                        </Box>
+                                        {userTVShows.map((item) => (
+                                            <ListItem alignItems="center" key={item} >
+                                                {item}
+                                            </ListItem>
+                                        ))}
+                                    </List>
+                                    <List alignItems="center">
+                                        <Box textAlign="center">
+                                            <ListSubheader>Video Games Played</ListSubheader>
+                                        </Box>
+                                        {userVideoGames.map((item) => (
+                                            <ListItem alignItems="center" key={item} >
+                                                {item}
+                                            </ListItem>
+                                        ))}
+                                    </List>
+                                </Box>
+                            </Box>
+                        )}
+                    </Box>
                 </PerfectScrollbar>
             </main>
         </ThemeProvider>

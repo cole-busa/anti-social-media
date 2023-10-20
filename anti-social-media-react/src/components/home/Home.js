@@ -393,44 +393,50 @@ const Home = () => {
                 </Box>
                 <Box>
                     {!edit ? (
-                        <Box>
-                            <Box textAlign='center'>
-                                <Button align="center" variant="contained" onClick={() => handleEdit()}>
-                                    Edit Profile
-                                </Button>
-                            </Box>
-                            <Box style={{ display: 'flex', justifyContent: 'center' }}>
-                                <List alignItems="center">
-                                    <Box textAlign="center">
-                                        <ListSubheader>Movies Watched</ListSubheader>
+                        <Box> 
+                            {loadingUserEditList ? (
+                                <Typography>Loading user info...</Typography>
+                            ) : (
+                                <Box>
+                                    <Box textAlign = 'center'>
+                                        <Button align = "center" variant = "contained" onClick = { () => handleEdit() }>
+                                            Edit Profile
+                                        </Button>
                                     </Box>
-                                    {moviesInput.map((item) => (
-                                        <ListItem key={item} >
-                                            {item}
-                                        </ListItem>
-                                    ))}
-                                </List>
-                                <List alignItems="center">
-                                    <Box textAlign="center">
-                                        <ListSubheader>TV Shows Watched</ListSubheader>
+                                    <Box style={{ display: 'flex', justifyContent: 'center' }}>
+                                        <List alignItems="center">
+                                            <Box textAlign="center">
+                                                <ListSubheader>Movies Watched</ListSubheader>
+                                            </Box>
+                                            {userMovies.map((item) => (
+                                                <ListItem alignItems="center" key={item} >
+                                                    {item}
+                                                </ListItem>
+                                            ))}
+                                        </List>
+                                        <List alignItems="center">
+                                            <Box textAlign="center">
+                                                <ListSubheader>TV Shows Watched</ListSubheader>
+                                            </Box>
+                                            {userTVShows.map((item) => (
+                                                <ListItem alignItems="center" key={item} >
+                                                    {item}
+                                                </ListItem>
+                                            ))}
+                                        </List>
+                                        <List alignItems="center">
+                                            <Box textAlign="center">
+                                                <ListSubheader>Video Games Played</ListSubheader>
+                                            </Box>
+                                            {userVideoGames.map((item) => (
+                                                <ListItem alignItems="center" key={item} >
+                                                    {item}
+                                                </ListItem>
+                                            ))}
+                                        </List>
                                     </Box>
-                                    {tvShowsInput.map((item) => (
-                                        <ListItem key={item} >
-                                            {item}
-                                        </ListItem>
-                                    ))}
-                                </List>
-                                <List alignItems="center">
-                                    <Box textAlign="center">
-                                        <ListSubheader>Video Games Played</ListSubheader>   
-                                    </Box>
-                                    {videoGamesInput.map((item) => (
-                                        <ListItem key={item} >
-                                            {item}
-                                        </ListItem>
-                                    ))}
-                                </List>
-                            </Box>
+                                </Box>
+                            )}
                         </Box>
                     ) : (
                         <Box>
