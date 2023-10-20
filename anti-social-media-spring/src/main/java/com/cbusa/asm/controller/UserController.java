@@ -61,8 +61,10 @@ public class UserController {
 		Optional<User> optionalUser = userService.findUserByName(username);
 		if (optionalUser.isPresent()) {
 			User user = optionalUser.get();
-			user.setAntiSocialScore(antiSocialScore);
-			userService.updateUser(user);
+			if (user.getAntiSocialScore() != antiSocialScore) {
+				user.setAntiSocialScore(antiSocialScore);
+				userService.updateUser(user);
+			}
 		}
 	}
 
