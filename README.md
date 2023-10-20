@@ -46,13 +46,13 @@ Now the database is up and running on port 13306.
 
 To start the Spring Boot application, navigate to the anti-social-media-spring folder and run
 
-./mvnw spring-boot:run
+    ./mvnw spring-boot:run
 
 ### React:
 
 To start the React application, navigate to the anti-social-media-react folder and run
 
-npm start
+    npm start
 
 
 

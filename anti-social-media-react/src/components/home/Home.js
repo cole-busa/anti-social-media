@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 
 import api from '../../api/axiosConfig';
 import { useNavigate } from 'react-router-dom';
-import { AppBar, Autocomplete, Box, Button, Container, CssBaseline, Drawer, MenuItem, Stack, TextField, ThemeProvider, Toolbar, Typography, createTheme } from '@mui/material';
+import { AppBar, Autocomplete, Box, Button, Container, CssBaseline, Drawer, List, ListItem, ListSubheader, MenuItem, Stack, TextField, ThemeProvider, Toolbar, Typography, createTheme } from '@mui/material';
 import CheckIcon from "@mui/icons-material/Check";
 
 const Home = () => {
@@ -393,10 +393,44 @@ const Home = () => {
                 </Box>
                 <Box>
                     {!edit ? (
-                        <Box textAlign='center'>
-                            <Button align="center" variant="contained" onClick={() => handleEdit()}>
-                                Edit Profile
-                            </Button>
+                        <Box>
+                            <Box textAlign='center'>
+                                <Button align="center" variant="contained" onClick={() => handleEdit()}>
+                                    Edit Profile
+                                </Button>
+                            </Box>
+                            <Box style={{ display: 'flex', justifyContent: 'center' }}>
+                                <List alignItems="center">
+                                    <Box textAlign="center">
+                                        <ListSubheader>Movies Watched</ListSubheader>
+                                    </Box>
+                                    {moviesInput.map((item) => (
+                                        <ListItem key={item} >
+                                            {item}
+                                        </ListItem>
+                                    ))}
+                                </List>
+                                <List alignItems="center">
+                                    <Box textAlign="center">
+                                        <ListSubheader>TV Shows Watched</ListSubheader>
+                                    </Box>
+                                    {tvShowsInput.map((item) => (
+                                        <ListItem key={item} >
+                                            {item}
+                                        </ListItem>
+                                    ))}
+                                </List>
+                                <List alignItems="center">
+                                    <Box textAlign="center">
+                                        <ListSubheader>Video Games Played</ListSubheader>   
+                                    </Box>
+                                    {videoGamesInput.map((item) => (
+                                        <ListItem key={item} >
+                                            {item}
+                                        </ListItem>
+                                    ))}
+                                </List>
+                            </Box>
                         </Box>
                     ) : (
                         <Box>
