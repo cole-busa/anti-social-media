@@ -42,7 +42,7 @@ const Home = () => {
     const [loadingEditList, setLoadingEditList] = useState(true);
     const [initializeInput, setInitializeInput] = useState(true);
     
-    
+
     //Function called on press of Add Friend button
     const handleSendFriendRequest = (friendName) => {
         //Create a new friend with a POST request to the Friend table
@@ -424,6 +424,7 @@ const Home = () => {
     return (
         <ThemeProvider theme={defaultTheme}>
             <CssBaseline />
+            {/* Top AppBar displaying Home Page */}
             <AppBar sx={{ position: "fixed", zIndex: 1400 }}>
                 <Toolbar>
                     <Typography variant="h6" color="inherit" fontWeight='bold' noWrap>
@@ -432,6 +433,7 @@ const Home = () => {
                 </Toolbar>
             </AppBar>
             <main>
+                {/* Left Drawer for Friends List*/}
                 <Drawer
                     sx={{
                         '& .MuiDrawer-paper': {
@@ -482,6 +484,7 @@ const Home = () => {
                         </Box>
                     )}
                 </Drawer>
+                {/* Right Drawer for Top Users*/}
                 <Drawer
                     sx={{
                         '& .MuiDrawer-paper': {
@@ -510,6 +513,7 @@ const Home = () => {
                         </Box>
                     )}
                 </Drawer>
+                {/* Header box displaying profile name and anti-social score*/}
                 <Box
                     sx={{
                         bgcolor: 'background.paper',
@@ -531,9 +535,11 @@ const Home = () => {
                         </Typography>
                     </Container>
                 </Box>
+                {/* Profile body */}
                 <Box>
                     {!edit ? (
                         <Box> 
+                            {/* If user is not editing, display profile info */}
                             {loadingUserEditList ? (
                                 <Typography>Loading user info...</Typography>
                             ) : (
@@ -580,6 +586,7 @@ const Home = () => {
                         </Box>
                     ) : (
                         <Box>
+                            {/* If user is editing, display options to add or remove Movies, TV Shows, and/or Video Games */}
                             <Box textAlign='center'>
                                 <Button align="center" variant="contained" onClick={() => handleSave()}>
                                     Save Profile

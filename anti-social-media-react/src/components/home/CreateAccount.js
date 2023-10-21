@@ -134,6 +134,7 @@ const CreateAccount = () => {
                         alignItems: 'center',
                     }}
                 >
+                    {/* Form for creating a new account */}
                     <Typography component="h1" variant="h5" sx={{color:'white', fontFamily: 'Roboto'}}>Create Account</Typography>
                     <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
                         <FormControl>

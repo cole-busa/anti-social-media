@@ -31,7 +31,7 @@ const Profile = () => {
     const [userVideoGames, setUserVideoGames] = useState();
     const [loadingUserEditList, setLoadingUserEditList] = useState(true);
 
-    
+
     //Function called on press of Return Home button
     const handleReturnHome = () => {
         //Change current profile to current user
@@ -202,6 +202,7 @@ const Profile = () => {
     return (
         <ThemeProvider theme={defaultTheme}>
             <CssBaseline />
+            {/* Top AppBar displaying currentProfile's Page */}
             <AppBar sx={{ position: "fixed", zIndex: 1400 }}>
                 <Toolbar>
                     <Typography variant="h6" color="inherit" fontWeight='bold' noWrap>
@@ -210,6 +211,7 @@ const Profile = () => {
                 </Toolbar>
             </AppBar>
             <main>
+                {/* Left Drawer for Friends List*/}
                 <Drawer
                     sx={{
                         '& .MuiDrawer-paper': {
@@ -263,6 +265,7 @@ const Profile = () => {
                         </Box>
                     )}
                 </Drawer>
+                {/* Right Drawer for Top Users*/}
                 <Drawer
                     sx={{
                         '& .MuiDrawer-paper': {
@@ -291,6 +294,7 @@ const Profile = () => {
                         </Box>
                     )}
                 </Drawer>
+                {/* Header box displaying profile name and anti-social score*/}
                 <Box
                     sx={{
                         bgcolor: 'background.paper',
@@ -312,7 +316,9 @@ const Profile = () => {
                         </Typography>
                     </Container>
                 </Box>
+                {/* Profile body */}
                 <Box>
+                    {/* Display profile info */}
                     {loadingUserEditList ? (
                         <Typography>Loading user info...</Typography>
                     ) : (

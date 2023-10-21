@@ -88,6 +88,7 @@ const Login = () => {
                         alignItems: 'center',
                     }}
                 >
+                    {/* Form for loggin in */}
                     <Typography component="h1" variant="h5" sx={{color:'white', fontFamily: 'Roboto'}}>Log In</Typography>
                     <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
                         <FormControl>
