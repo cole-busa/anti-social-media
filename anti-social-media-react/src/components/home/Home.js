@@ -42,6 +42,7 @@ const Home = () => {
     const [loadingEditList, setLoadingEditList] = useState(true);
     const [initializeInput, setInitializeInput] = useState(true);
     
+    
     //Function called on press of Add Friend button
     const handleSendFriendRequest = (friendName) => {
         //Create a new friend with a POST request to the Friend table
@@ -67,13 +68,17 @@ const Home = () => {
 
     //Function called on press of Edit Profile button
     const handleEdit = () => {
+        //Set editing to true
         setEdit(true);
     }
 
     //Function called on press of Save Profile button
     const handleSave = () => {
+        //Update the user info on the database with the data inputted
         updateUserInfo().then(() => {
+            //Update the user movies, tv shows, and video games variables
             setUserMoviesTVShowsAndVideoGames().then(() => {
+                //Set editing to false
                 setEdit(false);
             });
         });
@@ -429,14 +434,11 @@ const Home = () => {
             <main>
                 <Drawer
                     sx={{
-                        width: 240,
-                        flexShrink: 0,
-                        bgcolor: 'background.paper',
                         '& .MuiDrawer-paper': {
                             width: 240,
                             boxSizing: 'border-box',
-                            marginTop: 8,
-                        },
+                            marginTop: 8
+                        }
                     }}
                     variant="permanent"
                     anchor="left"
@@ -449,12 +451,7 @@ const Home = () => {
                     ) : allUsersAdded ? (
                         <Typography>All users added!</Typography>
                     ) : (
-                        <Box
-                            sx={{
-                                display: 'flex',
-                                flexDirection: 'column',
-                            }}
-                        >
+                        <Box sx={{ display: 'flex', flexDirection: 'column' }} >
                             {users.map((user) => (
                                 <Box key={user.id} sx={{ display: 'flex', justifyContent: 'space-between' }}>
                                     <Typography>{user.username}</Typography>
@@ -473,12 +470,7 @@ const Home = () => {
                     ) : noFriends ? (
                         <Typography>No friends yet...</Typography>
                     ) : (
-                        <Box
-                            sx={{
-                                display: 'flex',
-                                flexDirection: 'column',
-                            }}
-                        >
+                        <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                             {friends.map((friend) => (
                                 <Box key={[friend.username, friend.friendName]} sx={{ display: 'flex', justifyContent: 'space-between' }}>
                                     <Typography>{friend.friendName}</Typography>
@@ -492,14 +484,11 @@ const Home = () => {
                 </Drawer>
                 <Drawer
                     sx={{
-                        width: 240,
-                        flexShrink: 0,
-                        bgcolor: 'background.paper',
                         '& .MuiDrawer-paper': {
                             width: 240,
                             boxSizing: 'border-box',
-                            marginTop: 8,
-                        },
+                            marginTop: 8
+                        }
                     }}
                     variant="permanent"
                     anchor="right"
@@ -507,12 +496,7 @@ const Home = () => {
                     {loadingUsers ? (
                         <Typography>Loading users...</Typography>
                     ) : (
-                        <Box
-                            sx={{
-                                display: 'flex',
-                                flexDirection: 'column',
-                            }}
-                        >
+                        <Box sx={{ display: 'flex', flexDirection: 'column' }} >
                             <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                                 <Typography fontWeight='bold' color='blue' sx={{ textDecoration: 'underline' }}>Top Users</Typography>
                                 <Typography fontWeight='bold' color='blue' sx={{ textDecoration: 'underline' }}>User Score</Typography>
@@ -545,15 +529,7 @@ const Home = () => {
                         <Typography variant="h5" align="center" color="purple" fontWeight='bold' paragraph>
                             Anti-Social Score: {antiSocialScore.toLocaleString()}
                         </Typography>
-                        <Stack
-                            sx={{ pt: 4 }}
-                            direction="row"
-                            spacing={2}
-                            justifyContent="center"
-                        >
-                        </Stack>
                     </Container>
-                    
                 </Box>
                 <Box>
                     {!edit ? (
@@ -593,7 +569,7 @@ const Home = () => {
                                                 <ListSubheader>Video Games Played</ListSubheader>
                                             </Box>
                                             {userVideoGames.map((item) => (
-                                                <ListItem alignItems="center" key={item} >
+                                                <ListItem key={item} >
                                                     {item}
                                                 </ListItem>
                                             ))}

@@ -56,4 +56,4 @@ To start the React application, navigate to the anti-social-media-react folder a
 
 
 
-TODO: Update the total anti-social score. Add login authentication to the login page.
+TODO: Add login authentication to the login page.

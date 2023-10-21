@@ -31,6 +31,7 @@ const Profile = () => {
     const [userVideoGames, setUserVideoGames] = useState();
     const [loadingUserEditList, setLoadingUserEditList] = useState(true);
 
+    
     //Function called on press of Return Home button
     const handleReturnHome = () => {
         //Change current profile to current user
@@ -211,13 +212,11 @@ const Profile = () => {
             <main>
                 <Drawer
                     sx={{
-                        width: 240,
-                        flexShrink: 0,
                         '& .MuiDrawer-paper': {
                             width: 240,
                             boxSizing: 'border-box',
-                            marginTop: 8,
-                        },
+                            marginTop: 8
+                        }
                     }}
                     variant="permanent"
                     anchor="left"
@@ -230,12 +229,7 @@ const Profile = () => {
                     ) : allUsersAdded ? (
                         <Typography>All users added!</Typography>
                     ) : (
-                        <Box
-                            sx={{
-                                display: 'flex',
-                                flexDirection: 'column',
-                            }}
-                        >
+                        <Box sx={{ display: 'flex', flexDirection: 'column' }} >
                             {users.map((user) => (
                                 <Box key={user.id} sx={{ display: 'flex', justifyContent: 'space-between' }}>
                                     <Typography>{user.username}</Typography>
@@ -254,12 +248,7 @@ const Profile = () => {
                     ) : noFriends ? (
                         <Typography>No friends yet...</Typography>
                     ) : (
-                        <Box
-                            sx={{
-                                display: 'flex',
-                                flexDirection: 'column',
-                            }}
-                        >
+                        <Box sx={{ display: 'flex', flexDirection: 'column' }} >
                             {friends.map((friend) => (
                                 <Box key={[friend.username, friend.friendName]} sx={{ display: 'flex', justifyContent: 'space-between' }}>
                                     <Typography>{friend.friendName}</Typography>
@@ -276,14 +265,11 @@ const Profile = () => {
                 </Drawer>
                 <Drawer
                     sx={{
-                        width: 240,
-                        flexShrink: 0,
-                        bgcolor: 'background.paper',
                         '& .MuiDrawer-paper': {
                             width: 240,
                             boxSizing: 'border-box',
-                            marginTop: 8,
-                        },
+                            marginTop: 8
+                        }
                     }}
                     variant="permanent"
                     anchor="right"
@@ -291,12 +277,7 @@ const Profile = () => {
                     {loadingUsers ? (
                         <Typography>Loading users...</Typography>
                     ) : (
-                        <Box
-                            sx={{
-                                display: 'flex',
-                                flexDirection: 'column',
-                            }}
-                        >
+                        <Box sx={{ display: 'flex', flexDirection: 'column' }} >
                             <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                                 <Typography fontWeight='bold' color='blue' sx={{ textDecoration: 'underline' }}>Top Users</Typography>
                                 <Typography fontWeight='bold' color='blue' sx={{ textDecoration: 'underline' }}>User Score</Typography>
@@ -315,7 +296,7 @@ const Profile = () => {
                         bgcolor: 'background.paper',
                         pt: 8,
                         pb: 6,
-                        marginTop: 8,
+                        marginTop: 8
                     }}
                 >
                     <Container maxWidth="sm">
