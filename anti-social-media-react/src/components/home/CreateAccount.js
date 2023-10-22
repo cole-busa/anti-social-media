@@ -9,7 +9,19 @@ const CreateAccount = () => {
     const navigate = useNavigate();
 
     //Default theme for Material UI elements
-    const defaultTheme = createTheme();
+    const defaultTheme = createTheme({
+        palette: {
+            primary: {
+                main: '#00b8ff',
+            },
+            secondary: {
+                main: '#009bd6',
+            },
+            tertiary: {
+                main: '#00719c'
+            }
+        }
+    });
 
     //Storage for user list in database
     const [users, setUsers] = useState([]);
@@ -77,21 +89,18 @@ const CreateAccount = () => {
                     //Create local variable for correct JSON formatting
                     const password = password1;
 
-                    //Create a new user with a POST request containing the username and password in JSON form
-                    api.post(
-                        '/User/', 
-                        JSON.stringify({ username, password }), 
-                        {
-                            headers: { 'Content-Type': 'application/json' },
-                            withCredentials: false
-                        }
-                    );
+                    //Create a new user with a POST request containing the username and password
+                    console.log(username);
+                    console.log(password);
+                    api.post('/User/' + username + "/" + password);
 
                     //Update the current user list
                     setUser().then(() => {
-
                         //Return to login page
                         navigate("/");
+
+                        //Reload the page
+                        window.location.reload();
                     });
                     break;
                 case (usernameMatch && passwordsMatch):
@@ -124,7 +133,7 @@ const CreateAccount = () => {
 
     return (
         <ThemeProvider theme={defaultTheme}>
-            <Container component="main" maxWidth="xs">
+            <Box position="fixed" alignItems="center" sx={{ backgroundColor: defaultTheme.palette.tertiary.main, height: "100vh", width: "100vw" }}>
                 <CssBaseline />
                 <Box
                     sx={{
@@ -139,6 +148,23 @@ const CreateAccount = () => {
                     <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
                         <FormControl>
                             <TextField
+                                sx={{
+                                    "& .MuiOutlinedInput-root": {
+                                        "&:not(.Mui-focused) fieldset": {
+                                            borderColor: "white"
+                                        }
+                                    }
+                                }}
+                                InputLabelProps={{
+                                    style: {
+                                        color: "white",
+                                    },
+                                }}
+                                InputProps={{
+                                    style: {
+                                        color: "white",
+                                    },
+                                }}
                                 margin='normal'
                                 id='username'
                                 name='username'
@@ -150,6 +176,23 @@ const CreateAccount = () => {
                                 helperText={usernameErrorMessage}
                             />
                             <TextField
+                                sx={{
+                                    "& .MuiOutlinedInput-root": {
+                                        "&:not(.Mui-focused) fieldset": {
+                                            borderColor: "white"
+                                        }
+                                    }
+                                }}
+                                InputLabelProps={{
+                                    style: {
+                                        color: "white",
+                                    },
+                                }}
+                                InputProps={{
+                                    style: {
+                                        color: "white",
+                                    },
+                                }}
                                 margin='normal'
                                 id="password1"
                                 name='password1'
@@ -161,6 +204,23 @@ const CreateAccount = () => {
                                 helperText={passwordErrorMessage}
                             />
                             <TextField
+                                sx={{
+                                    "& .MuiOutlinedInput-root": {
+                                        "&:not(.Mui-focused) fieldset": {
+                                            borderColor: "white"
+                                        }
+                                    }
+                                }}
+                                InputLabelProps={{
+                                    style: {
+                                        color: "white",
+                                    },
+                                }}
+                                InputProps={{
+                                    style: {
+                                        color: "white",
+                                    },
+                                }}
                                 margin='normal'
                                 id="password2"
                                 name='password2'
@@ -175,14 +235,14 @@ const CreateAccount = () => {
                                 type="submit"
                                 variant='contained' 
                                 fullWidth
-                                sx={{ mt: 3, mb: 2 }}
+                                sx={{ mt: 3, mb: 2, color: 'white' }}
                             >
                                 Create Account
                             </Button>
                         </FormControl>
                     </Box>
                 </Box>
-            </Container>
+            </Box>
         </ThemeProvider>
     );
 }

@@ -3,16 +3,10 @@ import Layout from './components/Layout';
 import { Routes, Route } from 'react-router-dom';
 import Login from './components/home/Login';
 import CreateAccount from './components/home/CreateAccount';
-import { useEffect, useState } from 'react';
 import Home from './components/home/Home';
 import Profile from './components/home/Profile';
 
 function App() {
-  const [bColor, changeBColor] = useState('#560088')
-
-  useEffect(() => {
-    document.body.style.backgroundColor = bColor;
-  },[bColor])
 
   return (
     <div className="App">

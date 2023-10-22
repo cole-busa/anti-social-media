@@ -9,7 +9,19 @@ const Login = () => {
     const navigate = useNavigate();
 
     //Default theme for Material UI elements
-    const defaultTheme = createTheme();
+    const defaultTheme = createTheme({
+        palette: {
+            primary: {
+                main: '#00b8ff',
+            },
+            secondary: {
+                main: '#009bd6',
+            },
+            tertiary: {
+                main: '#00719c'
+            }
+        }
+    });
 
     //Storage for user list in database
     const [users, setUsers] = useState([]);
@@ -78,7 +90,7 @@ const Login = () => {
 
     return (
         <ThemeProvider theme={defaultTheme}>
-            <Container component="main" maxWidth="xs">
+            <Box position="fixed" sx={{ backgroundColor: defaultTheme.palette.tertiary.main, height: "100vh", width: "100vw" }}>
                 <CssBaseline />
                 <Box
                     sx={{
@@ -93,6 +105,23 @@ const Login = () => {
                     <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
                         <FormControl>
                             <TextField
+                                sx={{
+                                    "& .MuiOutlinedInput-root": {
+                                        "&:not(.Mui-focused) fieldset": {
+                                            borderColor: "white"
+                                        }
+                                    }
+                                }}
+                                InputLabelProps={{
+                                    style: {
+                                        color: "white",
+                                    },
+                                }}
+                                InputProps={{
+                                    style: {
+                                        color: "white",
+                                    },
+                                }}
                                 margin='normal'
                                 id='username'
                                 name='username'
@@ -104,6 +133,23 @@ const Login = () => {
                                 helperText={errorMessage}
                             />
                             <TextField
+                                sx={{
+                                    "& .MuiOutlinedInput-root": {
+                                        "&:not(.Mui-focused) fieldset": {
+                                            borderColor: "white"
+                                        }
+                                    }
+                                }}
+                                InputLabelProps={{
+                                    style: {
+                                        color: "white",
+                                    },
+                                }}
+                                InputProps={{
+                                    style: {
+                                        color: "white",
+                                    },
+                                }}
                                 margin='normal'
                                 id="password"
                                 name='password'
@@ -119,7 +165,7 @@ const Login = () => {
                                 type="submit"
                                 variant='contained' 
                                 fullWidth
-                                sx={{ mt: 3, mb: 2 }}
+                                sx={{ mt: 3, mb: 2, color: 'white' }}
                             >
                                 Log in
                             </Button>
@@ -131,7 +177,7 @@ const Login = () => {
                         </FormControl>
                     </Box>
                 </Box>
-            </Container>
+            </Box>
         </ThemeProvider>
     );
 }

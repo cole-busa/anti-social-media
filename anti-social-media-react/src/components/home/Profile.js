@@ -8,7 +8,21 @@ const Profile = () => {
     //Helpful variables
     const navigate = useNavigate();
     const currentUser = localStorage.getItem('currentUser');
-    const defaultTheme = createTheme();
+
+    //Default theme for Material UI elements
+    const defaultTheme = createTheme({
+        palette: {
+            primary: {
+                main: '#00b8ff',
+            },
+            secondary: {
+                main: '#009bd6',
+            },
+            tertiary: {
+                main: '#00719c'
+            }
+        },
+    });
 
     //Friend List variables
     const [users, setUsers] = useState();
@@ -205,7 +219,7 @@ const Profile = () => {
             {/* Top AppBar displaying currentProfile's Page */}
             <AppBar sx={{ position: "fixed", zIndex: 1400 }}>
                 <Toolbar>
-                    <Typography variant="h6" color="inherit" fontWeight='bold' noWrap>
+                    <Typography variant="h6" color="white" fontWeight='bold' noWrap>
                         {currentProfile}'s Page
                     </Typography>
                 </Toolbar>
@@ -217,49 +231,50 @@ const Profile = () => {
                         '& .MuiDrawer-paper': {
                             width: 240,
                             boxSizing: 'border-box',
-                            marginTop: 8
+                            marginTop: 8,
+                            backgroundColor: defaultTheme.palette.secondary.main
                         }
                     }}
                     variant="permanent"
                     anchor="left"
                 >
-                    <Typography variant="h5" fontWeight='bold' sx={{ textDecoration: 'underline' }}>
+                    <Typography variant="h5" color='white' fontWeight='bold' sx={{ textDecoration: 'underline' }}>
                         Current Users:
                     </Typography>
                     {loadingUsers ? (
-                        <Typography>Loading users...</Typography>
+                        <Typography color='white'>Loading users...</Typography>
                     ) : allUsersAdded ? (
-                        <Typography>All users added!</Typography>
+                        <Typography color='white'>All users added!</Typography>
                     ) : (
                         <Box sx={{ display: 'flex', flexDirection: 'column' }} >
                             {users.map((user) => (
                                 <Box key={user.id} sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                                    <Typography>{user.username}</Typography>
-                                    <Button variant="contained" onClick={() => handleSendFriendRequest(user.username)}>
+                                    <Typography color='white' >{user.username}</Typography>
+                                    <Button variant="contained" sx={{color: 'white'}} onClick={() => handleSendFriendRequest(user.username)}>
                                         Add Friend
                                     </Button>
                                 </Box>
                             ))}
                         </Box>
                     )}
-                    <Typography variant="h5" fontWeight='bold' sx={{ textDecoration: 'underline' }}>
+                    <Typography variant="h5" fontWeight='bold' color='white' sx={{ textDecoration: 'underline' }}>
                         Current Friends:
                     </Typography>
                     {loadingFriends ? (
-                        <Typography>Loading friends...</Typography>
+                        <Typography color='white'>Loading friends...</Typography>
                     ) : noFriends ? (
-                        <Typography>No friends yet...</Typography>
+                            <Typography color='white'>No friends yet...</Typography>
                     ) : (
                         <Box sx={{ display: 'flex', flexDirection: 'column' }} >
                             {friends.map((friend) => (
                                 <Box key={[friend.username, friend.friendName]} sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                                    <Typography>{friend.friendName}</Typography>
-                                    <Button variant="contained" onClick={() => handleViewProfile(friend.friendName)}>
+                                    <Typography color='white'>{friend.friendName}</Typography>
+                                    <Button variant="contained" sx={{ color: 'white' }} onClick={() => handleViewProfile(friend.friendName)}>
                                         View Profile
                                     </Button>
                                 </Box>
                             ))}
-                            <Button variant="contained" onClick={() => handleReturnHome()}>
+                            <Button variant="contained" sx={{ color: 'white' }} onClick={() => handleReturnHome()}>
                                 Return Home
                             </Button>
                         </Box>
@@ -271,7 +286,8 @@ const Profile = () => {
                         '& .MuiDrawer-paper': {
                             width: 240,
                             boxSizing: 'border-box',
-                            marginTop: 8
+                            marginTop: 8,
+                            backgroundColor: defaultTheme.palette.secondary.main
                         }
                     }}
                     variant="permanent"
@@ -282,13 +298,13 @@ const Profile = () => {
                     ) : (
                         <Box sx={{ display: 'flex', flexDirection: 'column' }} >
                             <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                                <Typography fontWeight='bold' color='blue' sx={{ textDecoration: 'underline' }}>Top Users</Typography>
-                                <Typography fontWeight='bold' color='blue' sx={{ textDecoration: 'underline' }}>User Score</Typography>
+                                <Typography fontWeight='bold' color='white' variant="h6" sx={{ textDecoration: 'underline' }}>Top Users</Typography>
+                                <Typography fontWeight='bold' color='white' variant="h6" sx={{ textDecoration: 'underline' }}>User Score</Typography>
                             </Box>
                             {allUsers.map((user) => (
                                 <Box key={[user.username]} sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                                    <Typography>{user.username}</Typography>
-                                    <Typography>{user.antiSocialScore.toLocaleString()}</Typography>
+                                    <Typography color='white'>{user.username}</Typography>
+                                    <Typography color='white'>{user.antiSocialScore.toLocaleString()}</Typography>
                                 </Box>
                             ))}
                         </Box>
@@ -307,17 +323,24 @@ const Profile = () => {
                         <Typography
                             variant="h1"
                             align="center"
-                            color="text.primary"
+                            sx={{ color: defaultTheme.palette.primary.main }}
                         >
                             {currentProfile}
                         </Typography>
-                        <Typography variant="h5" align="center" color="purple" fontWeight='bold' paragraph>
+                        <Typography variant="h5" align="center" fontWeight='bold' paragraph sx={{ color: defaultTheme.palette.secondary.main }}>
                             Anti-Social Score: {antiSocialScore.toLocaleString()}
                         </Typography>
                     </Container>
                 </Box>
                 {/* Profile body */}
-                <Box>
+                <Box
+                    sx={{
+                        backgroundColor: defaultTheme.palette.tertiary.main,
+                        pt: 4,
+                        pb: 4,
+                        height: "100vh"
+                    }}
+                >
                     {/* Display profile info */}
                     {loadingUserEditList ? (
                         <Typography>Loading user info...</Typography>
@@ -326,30 +349,57 @@ const Profile = () => {
                             <Box style={{ display: 'flex', justifyContent: 'center' }}>
                                 <List>
                                     <Box textAlign="center">
-                                        <ListSubheader>Movies Watched</ListSubheader>
+                                        <ListSubheader 
+                                            sx={{ 
+                                                backgroundColor: defaultTheme.palette.tertiary.main, 
+                                                color: 'white'
+                                            }}
+                                        >
+                                            <Typography fontWeight='bold' color='white' variant="h6" sx={{ textDecoration: 'underline' }}> 
+                                                Movies Watched 
+                                            </Typography>
+                                        </ListSubheader>
                                     </Box>
                                     {userMovies.map((item) => (
-                                        <ListItem key={item} >
+                                        <ListItem sx={{ color: 'white' }} key={item} >
                                             {item}
                                         </ListItem>
                                     ))}
                                 </List>
                                 <List>
                                     <Box textAlign="center">
-                                        <ListSubheader>TV Shows Watched</ListSubheader>
+                                        <ListSubheader
+                                            sx={{
+                                                backgroundColor: defaultTheme.palette.tertiary.main,
+                                                color: 'white'
+                                            }}
+                                        >
+                                            <Typography fontWeight='bold' color='white' variant="h6" sx={{ textDecoration: 'underline' }}>
+                                                TV Shows Watched
+                                            </Typography>
+                                        </ListSubheader>
                                     </Box>
                                     {userTVShows.map((item) => (
-                                        <ListItem key={item} >
+                                        <ListItem sx={{ color: 'white' }} key={item} >
                                             {item}
                                         </ListItem>
                                     ))}
                                 </List>
                                 <List>
                                     <Box textAlign="center">
-                                        <ListSubheader>Video Games Played</ListSubheader>
+                                        <ListSubheader
+                                            sx={{
+                                                backgroundColor: defaultTheme.palette.tertiary.main,
+                                                color: 'white'
+                                            }}
+                                        >
+                                            <Typography fontWeight='bold' color='white' variant="h6" sx={{ textDecoration: 'underline' }}>
+                                                Video Games Played
+                                            </Typography>
+                                        </ListSubheader>
                                     </Box>
                                     {userVideoGames.map((item) => (
-                                        <ListItem key={item} >
+                                        <ListItem sx={{ color: 'white' }} key={item} >
                                             {item}
                                         </ListItem>
                                     ))}
