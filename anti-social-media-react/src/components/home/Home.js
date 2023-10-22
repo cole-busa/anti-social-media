@@ -657,6 +657,12 @@ const Home = () => {
                                                         borderColor: "white"
                                                     }
                                                 },
+                                                "& .MuiAutocomplete-input": {
+                                                    color: "white",
+                                                },
+                                                "& .MuiInputLabel-root": {
+                                                    color: "white",
+                                                },
                                                 m: 1,
                                                 width: 500
                                             }}
@@ -696,6 +702,12 @@ const Home = () => {
                                                     "&:not(.Mui-focused) fieldset": {
                                                         borderColor: "white"
                                                     }
+                                                },
+                                                "& .MuiAutocomplete-input": {
+                                                    color: "white",
+                                                },
+                                                "& .MuiInputLabel-root": {
+                                                    color: "white",
                                                 },
                                                 m: 1, 
                                                 width: 500
@@ -737,6 +749,12 @@ const Home = () => {
                                                     "&:not(.Mui-focused) fieldset": {
                                                         borderColor: "white"
                                                     }
+                                                },
+                                                "& .MuiAutocomplete-input": {
+                                                    color: "white",
+                                                },
+                                                "& .MuiInputLabel-root": {
+                                                    color: "white",
                                                 },
                                                 m: 1,
                                                 width: 500
