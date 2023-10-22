@@ -53,7 +53,3 @@ To start the Spring Boot application, navigate to the anti-social-media-spring f
 To start the React application, navigate to the anti-social-media-react folder and run
 
     npm start
-
-
-
-TODO: Add login authentication to the login page.
