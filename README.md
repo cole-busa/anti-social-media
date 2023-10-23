@@ -56,16 +56,30 @@ To start the React application, navigate to the anti-social-media-react folder a
 
 ## What does it look like?
 
+Creating an account:
+
 ![plot](./data/images/CreateAccount.png)
+
+Errors that come up with creating an account:
 
 ![plot](./data/images/CreateAccountError.png)
 
+Login page:
+
 ![plot](./data/images/Login.png)
+
+Errors that come up with a login page:
 
 ![plot](./data/images/LoginError.png)
 
+Home page:
+
 ![plot](./data/images/Home.png)
 
+Editing your profile on the home page:
+
 ![plot](./data/images/HomeEditProfile.png)
+
+Viewing another user's profile:
 
 ![plot](./data/images/Profile.png)
