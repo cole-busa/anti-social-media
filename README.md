@@ -53,3 +53,19 @@ To start the Spring Boot application, navigate to the anti-social-media-spring f
 To start the React application, navigate to the anti-social-media-react folder and run
 
     npm start
+
+## What does it look like?
+
+![plot](./data/images/CreateAccount.png)
+
+![plot](./data/images/CreateAccountError.png)
+
+![plot](./data/images/Login.png)
+
+![plot](./data/images/LoginError.png)
+
+![plot](./data/images/Home.png)
+
+![plot](./data/images/HomeEditProfile.png)
+
+![plot](./data/images/Profile.png)
