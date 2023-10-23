@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/cole-busa/anti-social-media/issues"
   },
-  "homepage": "https://github.com/cole-busa/anti-social-media#readme"
+  "homepage": "https://github.com/cole-busa/anti-social-media#readme",
+  "dependencies": {
+    "react-remove-scroll-bar": "^2.3.4"
+  }
 }
