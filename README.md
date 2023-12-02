@@ -18,7 +18,7 @@ The datasets used are below. Any data cleaning can be found under data/data_clea
 
 ## Try it out!
 
-If you want to try it for yourself, you can download this repository.
+If you want to try it for yourself, you can download this repository. Make sure you have Maven, Spring Boot, and React installed with npm.
 
 ### Database:
 
@@ -56,7 +56,7 @@ To start the React application, navigate to the anti-social-media-react folder a
 
     npm start
 
-## What does it look like?
+## In Action
 
 Creating an account:
 
