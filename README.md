@@ -1,10 +1,16 @@
 # Anti-Social Media Platform
 
-## Overview:
+## Project Overview:
 
 How do we break into the over-saturated market of social media platforms? :thinking: Simple. Appeal to the one demographic overlooked by the very nature of social media: **the anti-social**. :sunglasses: What if there existed a platform where people could show off how anti-social they really are? Competitive video games are a prime example where the urge to compete overtakes one's anti-social nature. Therefore, by allowing people to display their anti-social habits like TV hours watched or singleplayer video games completed, we can gain access to a previously untapped market.
 
 This project uses ReactJS as the front-end with Axios for REST requests and Material UI for premade components. The back-end consists of Spring Boot alongside a MySQL database to store user info. :grinning:
+
+## The Code:
+
+Documentation for the ReactJS code can be found [here](./anti-social-media-react/src/).
+
+Documentation for the Spring Boot code can be found [here](./anti-social-media-spring/src/main/java/com/cbusa/asm/).
 
 ## Data:
 
@@ -15,6 +21,36 @@ The datasets used are below. Any data cleaning can be found under data/data_clea
 [Movies](https://gist.github.com/stungeye/a3af50385215b758637e73eaacac93a3)
 
 [Video Games](https://corgis-edu.github.io/corgis/csv/video_games/)
+
+## In Action:
+
+Creating an account:
+
+![plot](./data/images/CreateAccount.png)
+
+Errors that come up with creating an account:
+
+![plot](./data/images/CreateAccountError.png)
+
+Login page:
+
+![plot](./data/images/Login.png)
+
+Errors that come up with a login page:
+
+![plot](./data/images/LoginError.png)
+
+Home page:
+
+![plot](./data/images/Home.png)
+
+Editing your profile on the home page:
+
+![plot](./data/images/HomeEditProfile.png)
+
+Viewing another user's profile:
+
+![plot](./data/images/Profile.png)
 
 ## Try it out!
 
@@ -55,33 +91,3 @@ To start the Spring Boot application, navigate to the anti-social-media-spring f
 To start the React application, navigate to the anti-social-media-react folder and run
 
     npm start
-
-## In Action
-
-Creating an account:
-
-![plot](./data/images/CreateAccount.png)
-
-Errors that come up with creating an account:
-
-![plot](./data/images/CreateAccountError.png)
-
-Login page:
-
-![plot](./data/images/Login.png)
-
-Errors that come up with a login page:
-
-![plot](./data/images/LoginError.png)
-
-Home page:
-
-![plot](./data/images/Home.png)
-
-Editing your profile on the home page:
-
-![plot](./data/images/HomeEditProfile.png)
-
-Viewing another user's profile:
-
-![plot](./data/images/Profile.png)
